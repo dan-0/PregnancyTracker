@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">PregnancyTracker</string>
+    <string name="mother_s_name">Mother\'s Name</string>
+    <string name="back">Back</string>
+    <string name="next">Next</string>
+    <string name="cancel">Cancel</string>
+    <string name="confirm">Confirm</string>
+    <string name="due_date">Due date</string>
+    <string name="done">Done</string>
+    <string name="pregnancy_with">Pregnancy with: %1$s</string>
+    <string name="due_date_with_date">Due date: %1$s</string>
+    <string name="confirm_your_information">Confirm your information</string>
+    <string name="add_a_new_pregnancy">Add a new pregnancy</string>
+    <string name="please_confirm">Please confirm</string>
+    <string name="confirm_delete_pregnancy">Are you sure you want to remove this pregnancy? All associated data will be deleted</string>
+    <string name="remove_pregnancy">Remove pregnancy</string>
+    <string name="view_pregnancy_details">View pregnancy details</string>
+</resources>
