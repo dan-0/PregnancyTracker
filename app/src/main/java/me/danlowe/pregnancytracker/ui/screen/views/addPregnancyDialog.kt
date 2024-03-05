@@ -89,6 +89,7 @@ fun AddPregnancyDialogContent(
     Text(
       stringResource(R.string.add_a_new_pregnancy),
       style = MaterialTheme.typography.titleLarge,
+      modifier = Modifier.testTag("addPregnancyDialogTitle"),
     )
 
     val isNextEnabled = remember(motherName, datePickerState) {
@@ -152,23 +153,11 @@ fun PagerContent(
 ) {
   when (page) {
     0 -> {
-      var isError by rememberSaveable(motherName) {
-        mutableStateOf(false)
-      }
       OutlinedTextField(
         value = motherName,
         onValueChange = { newName -> nameUpdated(newName) },
         label = { Text(stringResource(R.string.mother_s_name)) },
         placeholder = { Text(stringResource(R.string.mother_s_name)) },
-        supportingText = {
-          if (isError) {
-            Text(
-              "Must not be empty",
-              style = MaterialTheme.typography.labelSmall,
-              color = MaterialTheme.colorScheme.error,
-            )
-          }
-        },
         keyboardOptions = KeyboardOptions(
           capitalization = KeyboardCapitalization.Words,
           imeAction = ImeAction.Next,
@@ -177,12 +166,9 @@ fun PagerContent(
           onNext = {
             if (isNextEnabled) {
               goToNext()
-            } else {
-              isError = true
             }
           },
         ),
-        isError = isError,
         modifier = modifier.fillMaxWidth().testTag("motherNameTextField"),
       )
     }
@@ -205,26 +191,28 @@ fun PagerContent(
         Text(
           stringResource(R.string.confirm_your_information),
           style = MaterialTheme.typography.titleMedium,
-          modifier = Modifier.padding(bottom = 8.dp),
+          modifier = Modifier.padding(bottom = 8.dp).testTag("confirmationTitle"),
         )
         Text(
           stringResource(id = R.string.mother_s_name),
           style = MaterialTheme.typography.labelSmall,
+          modifier = Modifier.testTag("motherNameLabel"),
         )
         Text(
           motherName.text,
-          modifier = Modifier.padding(start = 8.dp),
+          modifier = Modifier.padding(start = 8.dp).testTag("motherNameValue"),
         )
         Text(
           stringResource(id = R.string.due_date),
           style = MaterialTheme.typography.labelSmall,
+          modifier = Modifier.testTag("dueDateLabel"),
         )
         Text(
           datePickerState.selectedDateMillis
             ?.fromUtcLongToLocalDateInstant()
             ?.toLocalizedShortDate()
             .toString(),
-          modifier = Modifier.padding(start = 8.dp),
+          modifier = Modifier.padding(start = 8.dp).testTag("dueDateValue"),
         )
       }
     }
@@ -279,18 +267,20 @@ fun RowScope.PageIndicator(pagerState: PagerState, modifier: Modifier = Modifier
   ) {
     val currentPage = pagerState.currentPage
     repeat(pagerState.pageCount) { currentPageIndicatorPosition ->
+      val isCurrentPage = currentPage == currentPageIndicatorPosition
       Box(
         modifier = Modifier
           .padding(2.dp)
           .clip(CircleShape)
           .background(
-            color = if (currentPage == currentPageIndicatorPosition) {
+            color = if (isCurrentPage) {
               MaterialTheme.colorScheme.primary
             } else {
               MaterialTheme.colorScheme.onSurface
             },
           )
-          .size(8.dp),
+          .size(8.dp)
+          .testTag("pageIndicator$currentPageIndicatorPosition-$isCurrentPage"),
       )
     }
   }
@@ -315,6 +305,7 @@ fun RowScope.PagerBackButton(
             pagerState.animateScrollToPage(currentPage - 1)
           }
         },
+        modifier = Modifier.testTag("backButton"),
       ) {
         Text(stringResource(R.string.back))
       }
