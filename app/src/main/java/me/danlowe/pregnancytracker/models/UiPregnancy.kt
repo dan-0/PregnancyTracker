@@ -1,7 +1,7 @@
 package me.danlowe.pregnancytracker.models
 
 import me.danlowe.pregnancytracker.DbPregnancy
-import me.danlowe.pregnancytracker.util.date.AppDateFormatter
+import me.danlowe.utils.date.AppDateFormatter
 
 data class UiPregnancy(
   val id: Long,
@@ -9,7 +9,7 @@ data class UiPregnancy(
   val motherName: String,
 ) {
   companion object {
-    fun fromDbPregnancy(dbPregnancy: DbPregnancy, appDateFormatter: AppDateFormatter): UiPregnancy {
+    fun fromDbPregnancy(dbPregnancy: DbPregnancy, appDateFormatter: me.danlowe.utils.date.AppDateFormatter): UiPregnancy {
       return UiPregnancy(
         id = dbPregnancy.id,
         dueDate = appDateFormatter.toLocalizedShortDate(dbPregnancy.dueDate),

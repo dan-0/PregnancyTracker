@@ -30,8 +30,8 @@ import me.danlowe.pregnancytracker.models.UiPregnancy
 @Composable
 fun PregnancyItem(
   pregnancy: UiPregnancy,
-  modifier: Modifier = Modifier,
   removeClicked: (Long) -> Unit,
+  modifier: Modifier = Modifier,
   clicked: (Long) -> Unit,
 ) {
   Card(

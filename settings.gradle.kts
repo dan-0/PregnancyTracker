@@ -15,4 +15,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "PregnancyTracker"
 include(":app")
- 
+include(":testutils")
+include(":database")
+include(":utils")

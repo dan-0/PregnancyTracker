@@ -16,6 +16,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.getScreenModel
 import kotlinx.collections.immutable.persistentListOf
@@ -26,6 +27,8 @@ import me.danlowe.pregnancytracker.ui.screen.views.RemovePregnancyDialog
 class HomeScreen : Screen {
   @Composable
   override fun Content() {
+    val screenModel = getScreenModel<HomeScreenModel>()
+
     var showAddDialog by rememberSaveable {
       mutableStateOf(false)
     }
@@ -36,13 +39,13 @@ class HomeScreen : Screen {
       mutableStateOf(pregnancyForRemoval != null)
     }
 
-    val screenModel = getScreenModel<HomeScreenModel>()
     Scaffold(
       floatingActionButton = {
         FloatingActionButton(onClick = { showAddDialog = !showAddDialog }) {
           Icon(
             imageVector = Icons.Default.Add,
             contentDescription = "Add",
+            modifier = Modifier.testTag("homeFab"),
           )
         }
       },

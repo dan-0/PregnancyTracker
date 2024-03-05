@@ -6,16 +6,16 @@ import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import me.danlowe.pregnancytracker.DbPregnancy
 import me.danlowe.pregnancytracker.models.UiPregnancy
-import me.danlowe.pregnancytracker.testutils.TestDatabase
-import me.danlowe.pregnancytracker.testutils.TestDateFormatter
-import me.danlowe.pregnancytracker.testutils.TestDispatchers
+import me.danlowe.testutils.testutils.TestDatabase
+import me.danlowe.testutils.testutils.TestDateFormatter
+import me.danlowe.testutils.testutils.TestDispatchers
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class HomeScreenModelTest {
-  private lateinit var ut: HomeScreenModel
+  private lateinit var ut: RealHomeScreenModel
 
   private val pregnancyQueries = TestDatabase().memoryPregnancyTracker.pregnancyQueries
   private val dispatchers = TestDispatchers(UnconfinedTestDispatcher())
@@ -23,7 +23,7 @@ class HomeScreenModelTest {
 
   @Before
   fun setUp() {
-    ut = HomeScreenModel(pregnancyQueries, dispatchers, appDateFormatter)
+    ut = RealHomeScreenModel(pregnancyQueries, dispatchers, appDateFormatter)
   }
 
   @Test

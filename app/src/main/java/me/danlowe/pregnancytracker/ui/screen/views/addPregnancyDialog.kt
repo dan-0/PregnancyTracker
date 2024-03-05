@@ -46,8 +46,8 @@ import androidx.compose.ui.window.Dialog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import me.danlowe.pregnancytracker.R
-import me.danlowe.pregnancytracker.util.date.fromUtcLongToLocalDateInstant
-import me.danlowe.pregnancytracker.util.date.toLocalizedShortDate
+import me.danlowe.utils.date.fromUtcLongToLocalDateInstant
+import me.danlowe.utils.date.toLocalizedShortDate
 
 @Composable
 fun AddPregnancyDialog(
@@ -146,9 +146,9 @@ fun PagerContent(
   page: Int,
   motherName: TextFieldValue,
   datePickerState: DatePickerState,
-  modifier: Modifier = Modifier,
   isNextEnabled: Boolean,
   goToNext: () -> Unit,
+  modifier: Modifier = Modifier,
   nameUpdated: (TextFieldValue) -> Unit,
 ) {
   when (page) {

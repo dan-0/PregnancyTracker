@@ -2,7 +2,6 @@ plugins {
   alias(libs.plugins.android.application)
   alias(libs.plugins.kotlin)
   alias(libs.plugins.ksp)
-  alias(libs.plugins.sqldelight)
   alias(libs.plugins.ktLint)
 }
 
@@ -30,11 +29,11 @@ android {
     }
   }
   compileOptions {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.forClassVersion(libs.versions.javaVersion.get().toInt())
+    targetCompatibility = JavaVersion.forClassVersion(libs.versions.javaVersion.get().toInt())
   }
   kotlinOptions {
-    jvmTarget = JavaVersion.VERSION_17.toString()
+    jvmTarget = JavaVersion.forClassVersion(libs.versions.javaVersion.get().toInt()).toString()
   }
   buildFeatures {
     compose = true
@@ -49,16 +48,13 @@ android {
   }
 }
 
-sqldelight {
-  databases {
-    create("PregnancyTracker") {
-      packageName.set("me.danlowe.pregnancytracker")
-      this.configurationName
-    }
-  }
-}
-
 dependencies {
+  implementation(project(":utils"))
+  implementation(project(":database"))
+
+  testImplementation(project(":testutils"))
+
+  androidTestImplementation(project(":testutils"))
 
   implementation(libs.androidx.core.ktx)
   implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -100,7 +96,6 @@ dependencies {
   // DB
   implementation(libs.sqldelight.android.driver)
   implementation(libs.sqldelight.coroutines)
-  testImplementation(libs.sqlite.driver)
 
   // Lint
   ktlintRuleset(libs.composeKtlint)

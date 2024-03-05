@@ -28,6 +28,10 @@ secretsVersion = "2.0.1"
 sqlDelightVersion = "2.0.1"
 voyager = "1.0.0"
 monitor = "1.6.1"
+androidx-appcompat-appcompat = "1.6.1"
+material = "1.9.0"
+javaVersion = "61"
+minSdk = "29"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
