@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -48,9 +49,11 @@ fun RemovePregnancyDialogContent(
     Text(
       text = stringResource(R.string.please_confirm),
       style = MaterialTheme.typography.titleLarge,
+      modifier = Modifier.testTag("removePregnancyDialogTitle"),
     )
     Text(
       text = stringResource(R.string.confirm_delete_pregnancy),
+      modifier = Modifier.testTag("removePregnancyDialogPrompt"),
     )
     Row(
       modifier = Modifier.fillMaxWidth(),
@@ -60,6 +63,7 @@ fun RemovePregnancyDialogContent(
         onClick = {
           onDismiss()
         },
+        modifier = Modifier.testTag("cancelButton"),
       ) {
         Text(
           text = stringResource(R.string.cancel),
@@ -74,6 +78,7 @@ fun RemovePregnancyDialogContent(
           containerColor = MaterialTheme.colorScheme.error,
           contentColor = MaterialTheme.colorScheme.onError,
         ),
+        modifier = Modifier.testTag("deleteButton"),
       ) {
         Text(
           text = stringResource(R.string.confirm),
