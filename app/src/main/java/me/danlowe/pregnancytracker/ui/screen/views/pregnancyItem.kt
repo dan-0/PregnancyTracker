@@ -3,7 +3,6 @@ package me.danlowe.pregnancytracker.ui.screen.views
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,10 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Card
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -36,6 +32,7 @@ fun PregnancyItem(
   pregnancy: UiPregnancy,
   modifier: Modifier = Modifier,
   removeClicked: (Long) -> Unit,
+  clicked: (Long) -> Unit,
 ) {
   Card(
     modifier = modifier
@@ -46,7 +43,7 @@ fun PregnancyItem(
         onLongClickLabel = stringResource(R.string.remove_pregnancy),
         onLongClick = { removeClicked(pregnancy.id) },
         onClickLabel = stringResource(R.string.view_pregnancy_details),
-        onClick = { /* TODO */ },
+        onClick = { clicked(pregnancy.id) },
       )
       .testTag("pregnancyCard${pregnancy.id}"),
     shape = RoundedCornerShape(8.dp),
@@ -63,7 +60,9 @@ fun PregnancyItem(
         painter = painterResource(id = R.drawable.baby_in_womb),
         // not important
         contentDescription = null,
-        modifier = Modifier.size(100.dp),
+        modifier = Modifier
+          .size(100.dp)
+          .testTag("fetusImage${pregnancy.id}"),
         contentScale = ContentScale.Crop,
       )
 
@@ -75,22 +74,15 @@ fun PregnancyItem(
         Text(
           text = stringResource(R.string.pregnancy_with, pregnancy.motherName),
           style = MaterialTheme.typography.bodyLarge,
-          modifier = Modifier.testTag("motherName"),
+          modifier = Modifier.testTag("motherName${pregnancy.id}"),
         )
+
         Text(
           text = stringResource(R.string.due_date_with_date, pregnancy.dueDate),
           style = MaterialTheme.typography.bodyLarge,
+          modifier = Modifier.testTag("dueDate${pregnancy.id}"),
         )
       }
-
-      Icon(
-        imageVector = Icons.Default.Delete,
-        contentDescription = null,
-        tint = MaterialTheme.colorScheme.error,
-        modifier = Modifier.clickable {
-          removeClicked(pregnancy.id)
-        },
-      )
     }
   }
 }

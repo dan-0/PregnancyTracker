@@ -72,9 +72,11 @@ class HomeScreen : Screen {
           .padding(paddingValues),
       ) {
         items(pregnancies.value, key = { "pregnancies${it.id}" }) { pregnancy ->
-          PregnancyItem(pregnancy) { id ->
-            pregnancyForRemoval = id
-          }
+          PregnancyItem(
+            pregnancy = pregnancy,
+            removeClicked = { pregnancyForRemoval = pregnancy.id },
+            clicked = { /* TODO */ },
+          )
         }
       }
     }
