@@ -1,18 +1,14 @@
 plugins {
-  alias(libs.plugins.android.application)
+  alias(libs.plugins.app.android.application)
+  alias(libs.plugins.app.android.application.compose)
   alias(libs.plugins.kotlin)
-  alias(libs.plugins.ksp)
-  alias(libs.plugins.ktLint)
 }
 
 android {
   namespace = "me.danlowe.pregnancytracker"
-  compileSdk = 34
 
   defaultConfig {
     applicationId = "me.danlowe.pregnancytracker"
-    minSdk = 29
-    targetSdk = 34
     versionCode = 1
     versionName = "1.0"
 
@@ -24,22 +20,9 @@ android {
 
   buildTypes {
     release {
-      isMinifyEnabled = false
+      isMinifyEnabled = true
       proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
     }
-  }
-  compileOptions {
-    sourceCompatibility = JavaVersion.forClassVersion(libs.versions.javaVersion.get().toInt())
-    targetCompatibility = JavaVersion.forClassVersion(libs.versions.javaVersion.get().toInt())
-  }
-  kotlinOptions {
-    jvmTarget = JavaVersion.forClassVersion(libs.versions.javaVersion.get().toInt()).toString()
-  }
-  buildFeatures {
-    compose = true
-  }
-  composeOptions {
-    kotlinCompilerExtensionVersion = libs.versions.kotlinCompiler.get()
   }
   packaging {
     resources {

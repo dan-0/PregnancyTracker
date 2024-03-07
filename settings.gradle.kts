@@ -1,4 +1,5 @@
 pluginManagement {
+  includeBuild("build-logic")
   repositories {
     google()
     mavenCentral()
@@ -14,7 +15,10 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "PregnancyTracker"
+
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 include(":app")
 include(":testutils")
 include(":database")
 include(":utils")
+include(":mylibrary")

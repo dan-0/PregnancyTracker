@@ -2,36 +2,38 @@
 activityCompose = "1.8.2"
 androidDatabaseSqlcipher = "4.5.3"
 androidGradlePlugin = "8.2.2"
+androidx-appcompat-appcompat = "1.6.1"
+androidx-appcompat-appcompat161 = "1.6.1"
+androidxJunitVersion = "1.1.5"
+appcompat = "1.6.1"
 coilCompose = "2.6.0"
+com-google-android-material-material = "1.9.0"
 composeBom = "2024.02.01"
 coreKtx = "1.12.0"
+coroutinesVersion = "1.8.0"
+detektVersion = "1.23.0"
 espressoCore = "3.5.1"
+javaVersion = "61"
 junit = "4.13.2"
-androidxJunitVersion = "1.1.5"
 koinAndroid = "3.5.3"
 kotlin = "1.9.22"
 kotlinCompiler = "1.5.9" # This is used!
 kotlinxCollectionsImmutable = "0.3.5"
-kspVersion = "1.9.22-1.0.17"
-ktlint = "0.3.11"
-ktLintVersion = "12.1.0"
-coroutinesVersion = "1.8.0"
 kotlinxSerializationJson = "1.5.1"
+kspVersion = "1.9.22-1.0.17"
+ktLintVersion = "12.1.0"
+ktlint = "0.3.11"
 ktorClientVersion = "2.3.3"
 lifecycleRuntimeKtx = "2.7.0"
+material = "1.9.0"
+minSdk = "29"
 mockkVersion = "1.13.10"
-sqliteDriver = "2.0.1"
-store5 = "5.0.0-beta01"
-detektVersion = "1.23.0"
-appcompat = "1.6.1"
+monitor = "1.6.1"
 secretsVersion = "2.0.1"
 sqlDelightVersion = "2.0.1"
+sqliteDriver = "2.0.1"
+store5 = "5.0.0-beta01"
 voyager = "1.0.0"
-monitor = "1.6.1"
-androidx-appcompat-appcompat = "1.6.1"
-material = "1.9.0"
-javaVersion = "61"
-minSdk = "29"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
@@ -72,6 +74,11 @@ voyager-screenModel = { module = "cafe.adriel.voyager:voyager-screenmodel", vers
 voyager-transitions = { module = "cafe.adriel.voyager:voyager-transitions", version.ref = "voyager" }
 voyager-koin = { module = "cafe.adriel.voyager:voyager-koin", version.ref = "voyager" }
 androidx-monitor = { group = "androidx.test", name = "monitor", version.ref = "monitor" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidx-appcompat-appcompat161" }
+material = { group = "com.google.android.material", name = "material", version.ref = "com-google-android-material-material" }
+
+android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
+kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
@@ -82,4 +89,10 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 com-android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqlDelightVersion" }
-ksp = { id = "com.google.devtools.ksp", version.ref = "kspVersion"}
+ksp = { id = "com.google.devtools.ksp", version.ref = "kspVersion" }
+
+app-android-application = { id = "app.android.application", version = "unspecified"}
+app-android-application-compose = { id = "app.android.application.compose", version = "unspecified"}
+app-android-library = { id = "app.android.library", version = "unspecified" }
+app-android-library-compose = { id = "app.android.library.compose", version = "unspecified" }
+app-android-test = { id = "app.android.test", version = "unspecified" }
