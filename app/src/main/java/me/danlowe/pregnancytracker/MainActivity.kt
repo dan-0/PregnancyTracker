@@ -9,11 +9,13 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.transitions.SlideTransition
-import me.danlowe.pregnancytracker.ui.screen.HomeScreen
+import me.danlowe.pregnancytracker.ui.screen.home.HomeScreen
 import me.danlowe.pregnancytracker.ui.theme.PregnancyTrackerTheme
 import org.koin.androidx.compose.KoinAndroidContext
+import org.koin.core.annotation.KoinExperimentalAPI
 
 class MainActivity : ComponentActivity() {
+  @OptIn(KoinExperimentalAPI::class)
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContent {

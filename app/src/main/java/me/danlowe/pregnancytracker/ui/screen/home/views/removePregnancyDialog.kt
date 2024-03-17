@@ -1,4 +1,4 @@
-package me.danlowe.pregnancytracker.ui.screen.views
+package me.danlowe.pregnancytracker.ui.screen.home.views
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

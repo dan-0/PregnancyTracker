@@ -2,6 +2,15 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="PregnancyItemTest">
+        <State />
+      </entry>
+      <entry key="RemovePregnancyDialogTest">
+        <State />
+      </entry>
+      <entry key="Tests in 'me.danlowe.pregnancytracker'">
+        <State />
+      </entry>
       <entry key="app">
         <State />
       </entry>

@@ -1,11 +1,9 @@
-package me.danlowe.pregnancytracker.ui.screen
+package me.danlowe.pregnancytracker.ui.screen.home
 
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
-import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import kotlinx.collections.immutable.toImmutableList
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import me.danlowe.pregnancytracker.PregnancyQueries
@@ -45,8 +43,3 @@ class RealHomeScreenModel(
   }
 }
 
-interface HomeScreenModel : ScreenModel {
-  val items: Flow<List<UiPregnancy>>
-  fun addPregnancy(motherName: String, date: Long)
-  fun deletePregnancy(id: Long)
-}

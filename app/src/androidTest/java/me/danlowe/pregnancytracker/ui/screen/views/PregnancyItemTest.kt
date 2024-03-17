@@ -12,6 +12,7 @@ import androidx.compose.ui.test.performTouchInput
 import me.danlowe.pregnancytracker.R
 import me.danlowe.pregnancytracker.models.UiPregnancy
 import me.danlowe.pregnancytracker.testutils.targetContext
+import me.danlowe.pregnancytracker.ui.screen.home.views.PregnancyItem
 import org.junit.Rule
 import org.junit.Test
 

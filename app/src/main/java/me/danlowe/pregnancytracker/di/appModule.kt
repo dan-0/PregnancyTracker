@@ -3,8 +3,8 @@ package me.danlowe.pregnancytracker.di
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import me.danlowe.pregnancytracker.PregnancyTracker
-import me.danlowe.pregnancytracker.ui.screen.HomeScreenModel
-import me.danlowe.pregnancytracker.ui.screen.RealHomeScreenModel
+import me.danlowe.pregnancytracker.ui.screen.home.HomeScreenModel
+import me.danlowe.pregnancytracker.ui.screen.home.RealHomeScreenModel
 import me.danlowe.utils.coroutines.AppDispatchers
 import me.danlowe.utils.coroutines.RealAppDispatchers
 import org.koin.android.ext.koin.androidContext

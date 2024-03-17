@@ -1,4 +1,4 @@
-package me.danlowe.pregnancytracker.ui.screen
+package me.danlowe.pregnancytracker.ui.screen.home
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -20,9 +20,9 @@ import androidx.compose.ui.platform.testTag
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.getScreenModel
 import kotlinx.collections.immutable.persistentListOf
-import me.danlowe.pregnancytracker.ui.screen.views.AddPregnancyDialog
-import me.danlowe.pregnancytracker.ui.screen.views.PregnancyItem
-import me.danlowe.pregnancytracker.ui.screen.views.RemovePregnancyDialog
+import me.danlowe.pregnancytracker.ui.screen.home.views.AddPregnancyDialog
+import me.danlowe.pregnancytracker.ui.screen.home.views.PregnancyItem
+import me.danlowe.pregnancytracker.ui.screen.home.views.RemovePregnancyDialog
 
 class HomeScreen : Screen {
   @Composable

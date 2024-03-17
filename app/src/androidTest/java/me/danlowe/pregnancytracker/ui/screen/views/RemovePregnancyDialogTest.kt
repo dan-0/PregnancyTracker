@@ -10,6 +10,7 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import me.danlowe.pregnancytracker.R
 import me.danlowe.pregnancytracker.testutils.targetContext
+import me.danlowe.pregnancytracker.ui.screen.home.views.RemovePregnancyDialogContent
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
