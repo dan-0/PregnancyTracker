@@ -3,15 +3,33 @@ package me.danlowe.pregnancytracker
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import cafe.adriel.voyager.navigator.Navigator
+import cafe.adriel.voyager.navigator.tab.CurrentTab
+import cafe.adriel.voyager.navigator.tab.Tab
+import cafe.adriel.voyager.navigator.tab.TabDisposable
+import cafe.adriel.voyager.navigator.tab.TabNavigator
 import cafe.adriel.voyager.transitions.SlideTransition
 import me.danlowe.pregnancytracker.ui.screen.allpregnancies.AllPregnanciesScreen
-import me.danlowe.pregnancytracker.ui.screen.currentweek.CurrentWeekScreen
+import me.danlowe.pregnancytracker.ui.screen.currentweek.CurrentWeekTab
+import me.danlowe.pregnancytracker.ui.screen.logscreen.LogTab
 import me.danlowe.pregnancytracker.ui.theme.PregnancyTrackerTheme
 import me.danlowe.pregnancytracker.ui.views.FullScreenLoading
 import org.koin.androidx.compose.KoinAndroidContext
@@ -35,11 +53,48 @@ class MainActivity : ComponentActivity() {
               MainState.Loading -> {
                 FullScreenLoading()
               }
-              is MainState.AddPregnancy -> {
-                Navigator(CurrentWeekScreen(currentState.pregnancyId)) { navigator ->
-                  SlideTransition(navigator)
+
+              is MainState.HasExistingPregnancy -> {
+                TabNavigator(
+                  tab = CurrentWeekTab,
+                  tabDisposable = {
+                    TabDisposable(
+                      navigator = it,
+                      tabs = listOf(CurrentWeekTab, LogTab),
+                    )
+                  },
+                ) { tabNavigator ->
+                  Scaffold(
+                    bottomBar = {
+                      NavigationBar {
+
+                      }
+                      BottomAppBar(
+                        actions = {
+                          TabNavigationItem(
+                            tab = CurrentWeekTab,
+                            selected = tabNavigator.current == CurrentWeekTab,
+                          ) {
+                            tabNavigator.current = CurrentWeekTab
+                          }
+                          TabNavigationItem(
+                            tab = LogTab,
+                            selected = tabNavigator.current == LogTab,
+                          ) {
+                            tabNavigator.current = LogTab
+                          }
+                        },
+                      )
+                    },
+                    content = {
+                      Box(modifier = Modifier.padding(it)) {
+                        CurrentTab()
+                      }
+                    },
+                  )
                 }
               }
+
               MainState.AllPregnancies -> {
                 Navigator(AllPregnanciesScreen()) { navigator ->
                   SlideTransition(navigator)
@@ -53,3 +108,17 @@ class MainActivity : ComponentActivity() {
   }
 }
 
+@Composable
+private fun RowScope.TabNavigationItem(tab: Tab, selected: Boolean, onClick: () -> Unit) {
+  NavigationBarItem(
+    selected = selected,
+    onClick = onClick,
+    label = { Text(tab.options.title) },
+    icon = {
+      Icon(
+        painter = tab.options.icon ?: rememberVectorPainter(Icons.Default.Warning),
+        contentDescription = tab.options.title,
+      )
+    },
+  )
+}

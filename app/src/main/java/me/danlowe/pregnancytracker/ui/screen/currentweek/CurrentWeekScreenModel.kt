@@ -1,11 +1,16 @@
 package me.danlowe.pregnancytracker.ui.screen.currentweek
 
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToOne
 import cafe.adriel.voyager.core.model.ScreenModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.takeWhile
+import me.danlowe.database.prefs.PrefKey
 import me.danlowe.models.TrimesterProgress
 import me.danlowe.pregnancytracker.DbPregnancy
 import me.danlowe.pregnancytracker.PregnancyQueries
@@ -20,13 +25,21 @@ import java.time.temporal.ChronoUnit
 class CurrentWeekScreenModel(
   pregnancyQueries: PregnancyQueries,
   dispatchers: AppDispatchers,
-  currentPregnancyId: Long,
+  appPreferences: DataStore<Preferences>,
 ) : ScreenModel {
 
-  private val currentPregnancy: Flow<DbPregnancy> = pregnancyQueries
-    .selectById(currentPregnancyId)
-    .asFlow()
-    .mapToOne(dispatchers.io)
+  private val currentPregnancyIdFlow = appPreferences.data.map { preferences ->
+    preferences[PrefKey.currentPregnancy] ?: ID_NO_VALUE
+  }
+
+  private val currentPregnancy: Flow<DbPregnancy> = currentPregnancyIdFlow
+    .takeWhile { it != ID_NO_VALUE }
+    .flatMapLatest { currentPregnancyId ->
+      pregnancyQueries
+        .selectById(currentPregnancyId)
+        .asFlow()
+        .mapToOne(dispatchers.io)
+    }
 
   val state = currentPregnancy.map { pregnancy ->
     val dueDateInstant = pregnancy.dueDate.from3339StringToInstant().atZone(ZoneId.systemDefault())
@@ -45,4 +58,8 @@ class CurrentWeekScreenModel(
       currentWeekImage = R.drawable.ic_blueberry,
     )
   }.flowOn(dispatchers.io)
+
+  companion object {
+    private const val ID_NO_VALUE = -1L
+  }
 }

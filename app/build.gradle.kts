@@ -87,4 +87,10 @@ dependencies {
 
   // images
   implementation(libs.coil.compose)
+
+  // prefs
+  implementation(libs.androidx.datastore.preferences)
+
+  // logging
+  implementation(libs.kermit)
 }

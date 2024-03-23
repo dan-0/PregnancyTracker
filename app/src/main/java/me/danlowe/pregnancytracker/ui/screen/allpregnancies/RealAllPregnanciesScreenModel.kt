@@ -1,5 +1,8 @@
 package me.danlowe.pregnancytracker.ui.screen.allpregnancies
 
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import cafe.adriel.voyager.core.model.screenModelScope
@@ -7,6 +10,7 @@ import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import me.danlowe.database.DbUtils
+import me.danlowe.database.prefs.PrefKey
 import me.danlowe.pregnancytracker.PregnancyQueries
 import me.danlowe.pregnancytracker.models.UiPregnancy
 import me.danlowe.utils.coroutines.AppDispatchers
@@ -18,6 +22,7 @@ class RealAllPregnanciesScreenModel(
   private val dispatchers: AppDispatchers,
   private val appDateFormatter: AppDateFormatter,
   private val appTime: AppTime,
+  private val dataStore: DataStore<Preferences>,
 ) : AllPregnanciesScreenModel {
   override val items = pregnancyQueries
     .selectAll()
@@ -48,6 +53,14 @@ class RealAllPregnanciesScreenModel(
   override fun deletePregnancy(id: Long) {
     screenModelScope.launch(dispatchers.io) {
       pregnancyQueries.delete(id)
+    }
+  }
+
+  override fun setActivePregnancy(id: Long) {
+    screenModelScope.launch(dispatchers.io) {
+      dataStore.edit { preferences ->
+        preferences[PrefKey.currentPregnancy] = id
+      }
     }
   }
 }

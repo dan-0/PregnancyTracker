@@ -1,5 +1,9 @@
 package me.danlowe.pregnancytracker.di
 
+import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import me.danlowe.pregnancytracker.MainViewModel
@@ -7,6 +11,7 @@ import me.danlowe.pregnancytracker.PregnancyTracker
 import me.danlowe.pregnancytracker.ui.screen.allpregnancies.AllPregnanciesScreenModel
 import me.danlowe.pregnancytracker.ui.screen.allpregnancies.RealAllPregnanciesScreenModel
 import me.danlowe.pregnancytracker.ui.screen.currentweek.CurrentWeekScreenModel
+import me.danlowe.pregnancytracker.ui.screen.logscreen.LogModel
 import me.danlowe.utils.coroutines.AppDispatchers
 import me.danlowe.utils.coroutines.RealAppDispatchers
 import me.danlowe.utils.date.AppDateFormatter
@@ -34,6 +39,10 @@ val MODULE_APP = module {
     database.pregnancyQueries
   }
 
+  single {
+    androidContext().dataStore
+  }
+
   singleOf<AppDispatchers>(::RealAppDispatchers)
 
   singleOf(::RealAppDateFormatter).bind(AppDateFormatter::class)
@@ -43,10 +52,16 @@ val MODULE_APP = module {
   viewModelOf(::MainViewModel)
 }
 
-val MODULE_HOME = module {
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
+
+val MODULE_ALL_PREGNANCIES = module {
   factoryOf(::RealAllPregnanciesScreenModel).bind(AllPregnanciesScreenModel::class)
 }
 
 val MODULE_CURRENT_WEEK = module {
   factoryOf(::CurrentWeekScreenModel)
+}
+
+val MODULE_LOGGING = module {
+  factoryOf(::LogModel)
 }

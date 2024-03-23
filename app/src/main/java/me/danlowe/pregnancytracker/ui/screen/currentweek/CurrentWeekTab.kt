@@ -15,37 +15,51 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.getScreenModel
+import cafe.adriel.voyager.navigator.tab.Tab
+import cafe.adriel.voyager.navigator.tab.TabOptions
 import me.danlowe.models.TrimesterProgress
 import me.danlowe.pregnancytracker.R
 import me.danlowe.pregnancytracker.ui.screen.currentweek.views.TrimesterProgressView
 import me.danlowe.pregnancytracker.ui.views.FullScreenLoading
 import me.danlowe.utils.date.toLocalizedShortDate
-import org.koin.core.parameter.parametersOf
 import java.time.Instant
 
-class CurrentWeekScreen(private val currentPregnancyId: Long) : Screen {
+object CurrentWeekTab : Tab {
+  private fun readResolve(): Any = CurrentWeekTab
+  override val options: TabOptions
+    @Composable
+    get() {
+      val icon = rememberVectorPainter(Icons.Default.Home)
+      val title = stringResource(R.string.home)
+      return remember {
+        TabOptions(
+          index = 0u,
+          title = title,
+          icon = icon,
+        )
+      }
+    }
+
   @Composable
   override fun Content() {
-    val screenModel = getScreenModel<CurrentWeekScreenModel>(
-      parameters = { parametersOf(currentPregnancyId) },
-    )
-
+    val screenModel = getScreenModel<CurrentWeekScreenModel>()
     val state by screenModel.state.collectAsState(CurrentWeekState.Loading)
-
-//    TabNavigator(tab = )
 
     when (state) {
       CurrentWeekState.Loading -> {

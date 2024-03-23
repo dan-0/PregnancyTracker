@@ -19,74 +19,95 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.getScreenModel
-import cafe.adriel.voyager.navigator.LocalNavigator
-import cafe.adriel.voyager.navigator.currentOrThrow
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import me.danlowe.pregnancytracker.models.UiPregnancy
 import me.danlowe.pregnancytracker.ui.screen.allpregnancies.views.AddPregnancyDialog
 import me.danlowe.pregnancytracker.ui.screen.allpregnancies.views.PregnancyItem
 import me.danlowe.pregnancytracker.ui.screen.allpregnancies.views.RemovePregnancyDialog
-import me.danlowe.pregnancytracker.ui.screen.currentweek.CurrentWeekScreen
 
 class AllPregnanciesScreen : Screen {
   @Composable
   override fun Content() {
     val screenModel = getScreenModel<AllPregnanciesScreenModel>()
 
-    var showAddDialog by rememberSaveable {
-      mutableStateOf(false)
-    }
-    var pregnancyForRemoval by rememberSaveable {
-      mutableStateOf<Long?>(null)
-    }
-    val showRemovePregnancyDialog by rememberSaveable(pregnancyForRemoval) {
-      mutableStateOf(pregnancyForRemoval != null)
-    }
+    AllPregnanciesContent(screenModel)
+  }
+}
 
-    val navigator = LocalNavigator.currentOrThrow
+@Composable
+fun AllPregnanciesContent(screenModel: AllPregnanciesScreenModel) {
+  var showAddDialog by rememberSaveable {
+    mutableStateOf(false)
+  }
 
-    Scaffold(
-      floatingActionButton = {
-        FloatingActionButton(onClick = { showAddDialog = !showAddDialog }) {
-          Icon(
-            imageVector = Icons.Default.Add,
-            contentDescription = "Add",
-            modifier = Modifier.testTag("addFab"),
-          )
-        }
+  Scaffold(
+    floatingActionButton = {
+      FloatingActionButton(onClick = { showAddDialog = !showAddDialog }) {
+        Icon(
+          imageVector = Icons.Default.Add,
+          contentDescription = "Add",
+          modifier = Modifier.testTag("addFab"),
+        )
+      }
+    },
+  ) { paddingValues ->
+
+    val pregnancies = screenModel.items.collectAsState(persistentListOf())
+    AllPregnanciesView(
+      modifier = Modifier.fillMaxSize().padding(paddingValues),
+      pregnancies = pregnancies.value,
+      showAddDialog = showAddDialog,
+      deletePregnancy = { screenModel.deletePregnancy(it) },
+      setSelection = { screenModel.setActivePregnancy(it) },
+      addPregnancy = { motherName, date -> screenModel.addPregnancy(motherName, date) },
+      closeAddDialog = { showAddDialog = false },
+    )
+  }
+}
+
+@Composable
+fun AllPregnanciesView(
+  pregnancies: ImmutableList<UiPregnancy>,
+  showAddDialog: Boolean,
+  modifier: Modifier = Modifier,
+  deletePregnancy: (Long) -> Unit,
+  setSelection: (Long) -> Unit,
+  addPregnancy: (String, Long) -> Unit,
+  closeAddDialog: () -> Unit,
+) {
+  var pregnancyForRemoval by rememberSaveable {
+    mutableStateOf<Long?>(null)
+  }
+  val showRemovePregnancyDialog by rememberSaveable(pregnancyForRemoval) {
+    mutableStateOf(pregnancyForRemoval != null)
+  }
+
+  if (showAddDialog) {
+    AddPregnancyDialog(
+      closeDialog = closeAddDialog,
+      addNewPregnancy = addPregnancy,
+    )
+  }
+  if (showRemovePregnancyDialog) {
+    RemovePregnancyDialog(
+      removePregnancy = {
+        deletePregnancy(pregnancyForRemoval!!)
       },
-    ) { paddingValues ->
-      if (showAddDialog) {
-        AddPregnancyDialog(
-          closeDialog = { showAddDialog = false },
-          addNewPregnancy = { motherName, date ->
-            screenModel.addPregnancy(motherName, date)
-          },
-        )
-      }
-      if (showRemovePregnancyDialog) {
-        RemovePregnancyDialog(
-          removePregnancy = {
-            screenModel.deletePregnancy(pregnancyForRemoval!!)
-          },
-          onDismiss = {
-            pregnancyForRemoval = null
-          },
-        )
-      }
-      val pregnancies = screenModel.items.collectAsState(persistentListOf())
-      LazyColumn(
-        modifier = Modifier
-          .fillMaxSize()
-          .padding(paddingValues),
-      ) {
-        items(pregnancies.value, key = { "pregnancies${it.id}" }) { pregnancy ->
-          PregnancyItem(
-            pregnancy = pregnancy,
-            removeClicked = { pregnancyForRemoval = pregnancy.id },
-            clicked = { navigator.push(CurrentWeekScreen(pregnancy.id)) },
-          )
-        }
-      }
+      onDismiss = {
+        pregnancyForRemoval = null
+      },
+    )
+  }
+  LazyColumn(
+    modifier = modifier,
+  ) {
+    items(pregnancies, key = { "pregnancies${it.id}" }) { pregnancy ->
+      PregnancyItem(
+        pregnancy = pregnancy,
+        removeClicked = { pregnancyForRemoval = it },
+        clicked = setSelection,
+      )
     }
   }
 }

@@ -1,6 +1,9 @@
 package me.danlowe.pregnancytracker
 
 import androidx.compose.ui.util.fastFold
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.cash.sqldelight.coroutines.asFlow
@@ -11,12 +14,14 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import me.danlowe.database.DbUtils
+import me.danlowe.database.prefs.PrefKey
 import me.danlowe.utils.coroutines.AppDispatchers
 import me.danlowe.utils.date.from3339StringToInstant
 
 class MainViewModel(
   pregnancyQueries: PregnancyQueries,
   dispatchers: AppDispatchers,
+  appPreferences: DataStore<Preferences>,
 ) : ViewModel() {
 
   val state: StateFlow<MainState> = pregnancyQueries.selectAll().asFlow()
@@ -25,7 +30,10 @@ class MainViewModel(
         if (firstActivePregnancy == null) {
           MainState.AllPregnancies
         } else {
-          MainState.AddPregnancy(firstActivePregnancy.id)
+          appPreferences.edit { preferences ->
+            preferences[PrefKey.currentPregnancy] = firstActivePregnancy.id
+          }
+          MainState.HasExistingPregnancy(firstActivePregnancy.id)
         }
       }
     }

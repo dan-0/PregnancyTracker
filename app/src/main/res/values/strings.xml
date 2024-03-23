@@ -58,4 +58,6 @@
     <string name="what_to_expect_week">What to expect: Week %1$s</string>
     <string name="baby_size">Baby size</string>
     <string name="current_week_date_days_left">%1$s | %2$s days in | %3$s days to go</string>
+    <string name="home">Home</string>
+    <string name="log">Log</string>
 </resources>

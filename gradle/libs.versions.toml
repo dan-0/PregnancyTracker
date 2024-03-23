@@ -11,10 +11,12 @@ com-google-android-material-material = "1.9.0"
 composeBom = "2024.02.01"
 coreKtx = "1.12.0"
 coroutinesVersion = "1.8.0"
+datastorePreferences = "1.0.0"
 detektVersion = "1.23.0"
 espressoCore = "3.5.1"
 javaVersion = "61"
 junit = "4.13.2"
+kermit = "2.0.3"
 koinAndroid = "3.5.3"
 kotlin = "1.9.22"
 kotlinCompiler = "1.5.9" # This is used!
@@ -46,10 +48,12 @@ androidx-compose-ui-uiTestManifest = { module = "androidx.compose.ui:ui-test-man
 androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 androidx-compose-ui-toolingPreview = { module = "androidx.compose.ui:ui-tooling-preview" }
 androidx-compose-material3 = { module = "androidx.compose.material3:material3" }
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
 androidx-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCore" }
 androidx-junit = { module = "androidx.test.ext:junit", version.ref = "androidxJunitVersion" }
 androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
+kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koinAndroid" }
 koin-android-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koinAndroid" }
 kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinxCollectionsImmutable" }
