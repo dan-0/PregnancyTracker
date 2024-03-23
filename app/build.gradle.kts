@@ -72,6 +72,7 @@ dependencies {
   implementation(libs.voyager.screenModel)
   implementation(libs.voyager.koin)
   implementation(libs.voyager.transitions)
+  implementation(libs.voyager.tabs)
 
   // DI
   implementation(libs.koin.android)

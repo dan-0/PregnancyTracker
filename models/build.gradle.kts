@@ -13,10 +13,9 @@ android {
 }
 
 dependencies {
-  implementation(libs.sqldelight.android.driver)
-
   implementation(libs.androidx.core.ktx)
+  implementation(libs.kotlinx.collections.immutable)
+
   testImplementation(libs.junit)
   androidTestImplementation(libs.androidx.junit)
-  androidTestImplementation(libs.androidx.espresso.core)
 }
