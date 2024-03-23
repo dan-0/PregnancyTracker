@@ -4,15 +4,20 @@ import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import me.danlowe.pregnancytracker.MainViewModel
 import me.danlowe.pregnancytracker.PregnancyTracker
+import me.danlowe.pregnancytracker.ui.screen.allpregnancies.AllPregnanciesScreenModel
 import me.danlowe.pregnancytracker.ui.screen.allpregnancies.RealAllPregnanciesScreenModel
 import me.danlowe.pregnancytracker.ui.screen.currentweek.CurrentWeekScreenModel
+import me.danlowe.utils.coroutines.AppDispatchers
 import me.danlowe.utils.coroutines.RealAppDispatchers
+import me.danlowe.utils.date.AppDateFormatter
+import me.danlowe.utils.date.AppTime
 import me.danlowe.utils.date.RealAppDateFormatter
 import me.danlowe.utils.date.RealAppTime
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
+import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val MODULE_APP = module {
@@ -29,17 +34,17 @@ val MODULE_APP = module {
     database.pregnancyQueries
   }
 
-  singleOf(::RealAppDispatchers)
+  singleOf<AppDispatchers>(::RealAppDispatchers)
 
-  singleOf(::RealAppDateFormatter)
+  singleOf(::RealAppDateFormatter).bind(AppDateFormatter::class)
 
-  singleOf(::RealAppTime)
+  singleOf<AppTime>(::RealAppTime)
 
   viewModelOf(::MainViewModel)
 }
 
 val MODULE_HOME = module {
-  factoryOf(::RealAllPregnanciesScreenModel)
+  factoryOf(::RealAllPregnanciesScreenModel).bind(AllPregnanciesScreenModel::class)
 }
 
 val MODULE_CURRENT_WEEK = module {

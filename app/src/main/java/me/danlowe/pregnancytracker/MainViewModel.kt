@@ -23,7 +23,7 @@ class MainViewModel(
     .mapToList(dispatchers.io).map { pregnancies ->
       findFirstActivePregnancy(pregnancies).let { firstActivePregnancy ->
         if (firstActivePregnancy == null) {
-          MainState.Home
+          MainState.AllPregnancies
         } else {
           MainState.AddPregnancy(firstActivePregnancy.id)
         }

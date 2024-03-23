@@ -10,8 +10,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.transitions.SlideTransition
-import me.danlowe.pregnancytracker.ui.screen.currentweek.CurrentWeekScreen
 import me.danlowe.pregnancytracker.ui.screen.allpregnancies.AllPregnanciesScreen
+import me.danlowe.pregnancytracker.ui.screen.currentweek.CurrentWeekScreen
 import me.danlowe.pregnancytracker.ui.theme.PregnancyTrackerTheme
 import me.danlowe.pregnancytracker.ui.views.FullScreenLoading
 import org.koin.androidx.compose.KoinAndroidContext
@@ -40,13 +40,12 @@ class MainActivity : ComponentActivity() {
                   SlideTransition(navigator)
                 }
               }
-              MainState.Home -> {
+              MainState.AllPregnancies -> {
                 Navigator(AllPregnanciesScreen()) { navigator ->
                   SlideTransition(navigator)
                 }
               }
             }
-
           }
         }
       }
