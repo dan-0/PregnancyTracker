@@ -1,4 +1,4 @@
-package me.danlowe.pregnancytracker
+package me.danlowe.pregnancytracker.ui.main
 
 sealed class MainState {
   data object Loading : MainState()

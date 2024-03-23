@@ -6,7 +6,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
-import me.danlowe.pregnancytracker.MainViewModel
+import me.danlowe.pregnancytracker.ui.main.MainViewModel
 import me.danlowe.pregnancytracker.PregnancyTracker
 import me.danlowe.pregnancytracker.ui.screen.allpregnancies.AllPregnanciesScreenModel
 import me.danlowe.pregnancytracker.ui.screen.allpregnancies.RealAllPregnanciesScreenModel

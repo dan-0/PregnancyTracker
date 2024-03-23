@@ -1,4 +1,4 @@
-package me.danlowe.pregnancytracker
+package me.danlowe.pregnancytracker.ui.main
 
 import android.app.Application
 import me.danlowe.pregnancytracker.di.MODULE_ALL_PREGNANCIES

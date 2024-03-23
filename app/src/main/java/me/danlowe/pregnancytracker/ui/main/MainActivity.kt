@@ -1,4 +1,4 @@
-package me.danlowe.pregnancytracker
+package me.danlowe.pregnancytracker.ui.main
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
