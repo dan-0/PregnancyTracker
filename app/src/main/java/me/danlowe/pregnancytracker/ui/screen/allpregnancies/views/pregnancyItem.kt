@@ -1,4 +1,4 @@
-package me.danlowe.pregnancytracker.ui.screen.home.views
+package me.danlowe.pregnancytracker.ui.screen.allpregnancies.views
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi

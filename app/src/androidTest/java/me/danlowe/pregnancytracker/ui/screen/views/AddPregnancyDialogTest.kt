@@ -15,7 +15,7 @@ import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.test.pressKey
 import me.danlowe.pregnancytracker.R
 import me.danlowe.pregnancytracker.testutils.targetContext
-import me.danlowe.pregnancytracker.ui.screen.home.views.AddPregnancyDialogContent
+import me.danlowe.pregnancytracker.ui.screen.allpregnancies.views.AddPregnancyDialogContent
 import org.junit.Assert.assertEquals
 import org.junit.Assert.fail
 import org.junit.Rule

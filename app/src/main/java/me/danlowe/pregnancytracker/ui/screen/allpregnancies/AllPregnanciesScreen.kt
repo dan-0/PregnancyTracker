@@ -1,4 +1,4 @@
-package me.danlowe.pregnancytracker.ui.screen.home
+package me.danlowe.pregnancytracker.ui.screen.allpregnancies
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -22,15 +22,15 @@ import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import kotlinx.collections.immutable.persistentListOf
+import me.danlowe.pregnancytracker.ui.screen.allpregnancies.views.AddPregnancyDialog
+import me.danlowe.pregnancytracker.ui.screen.allpregnancies.views.PregnancyItem
+import me.danlowe.pregnancytracker.ui.screen.allpregnancies.views.RemovePregnancyDialog
 import me.danlowe.pregnancytracker.ui.screen.currentweek.CurrentWeekScreen
-import me.danlowe.pregnancytracker.ui.screen.home.views.AddPregnancyDialog
-import me.danlowe.pregnancytracker.ui.screen.home.views.PregnancyItem
-import me.danlowe.pregnancytracker.ui.screen.home.views.RemovePregnancyDialog
 
-class HomeScreen : Screen {
+class AllPregnanciesScreen : Screen {
   @Composable
   override fun Content() {
-    val screenModel = getScreenModel<HomeScreenModel>()
+    val screenModel = getScreenModel<AllPregnanciesScreenModel>()
 
     var showAddDialog by rememberSaveable {
       mutableStateOf(false)
@@ -50,7 +50,7 @@ class HomeScreen : Screen {
           Icon(
             imageVector = Icons.Default.Add,
             contentDescription = "Add",
-            modifier = Modifier.testTag("homeFab"),
+            modifier = Modifier.testTag("addFab"),
           )
         }
       },

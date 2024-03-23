@@ -2,13 +2,17 @@ package me.danlowe.pregnancytracker.di
 
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
+import me.danlowe.pregnancytracker.MainViewModel
 import me.danlowe.pregnancytracker.PregnancyTracker
+import me.danlowe.pregnancytracker.ui.screen.allpregnancies.RealAllPregnanciesScreenModel
 import me.danlowe.pregnancytracker.ui.screen.currentweek.CurrentWeekScreenModel
-import me.danlowe.pregnancytracker.ui.screen.home.HomeScreenModel
-import me.danlowe.pregnancytracker.ui.screen.home.RealHomeScreenModel
-import me.danlowe.utils.coroutines.AppDispatchers
 import me.danlowe.utils.coroutines.RealAppDispatchers
+import me.danlowe.utils.date.RealAppDateFormatter
+import me.danlowe.utils.date.RealAppTime
 import org.koin.android.ext.koin.androidContext
+import org.koin.androidx.viewmodel.dsl.viewModelOf
+import org.koin.core.module.dsl.factoryOf
+import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
 val MODULE_APP = module {
@@ -25,23 +29,19 @@ val MODULE_APP = module {
     database.pregnancyQueries
   }
 
-  single {
-    RealAppDispatchers() as AppDispatchers
-  }
+  singleOf(::RealAppDispatchers)
 
-  single {
-    me.danlowe.utils.date.RealAppDateFormatter(androidContext()) as me.danlowe.utils.date.AppDateFormatter
-  }
+  singleOf(::RealAppDateFormatter)
+
+  singleOf(::RealAppTime)
+
+  viewModelOf(::MainViewModel)
 }
 
 val MODULE_HOME = module {
-  factory {
-    RealHomeScreenModel(get(), get(), get()) as HomeScreenModel
-  }
+  factoryOf(::RealAllPregnanciesScreenModel)
 }
 
 val MODULE_CURRENT_WEEK = module {
-  factory {
-    CurrentWeekScreenModel(get(), get(), get(), get())
-  }
+  factoryOf(::CurrentWeekScreenModel)
 }

@@ -28,7 +28,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.getScreenModel
-import cafe.adriel.voyager.navigator.tab.TabNavigator
 import me.danlowe.models.TrimesterProgress
 import me.danlowe.pregnancytracker.R
 import me.danlowe.pregnancytracker.ui.screen.currentweek.views.TrimesterProgressView
@@ -46,7 +45,7 @@ class CurrentWeekScreen(private val currentPregnancyId: Long) : Screen {
 
     val state by screenModel.state.collectAsState(CurrentWeekState.Loading)
 
-    TabNavigator(tab = )
+//    TabNavigator(tab = )
 
     when (state) {
       CurrentWeekState.Loading -> {

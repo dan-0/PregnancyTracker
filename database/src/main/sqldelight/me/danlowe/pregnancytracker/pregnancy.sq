@@ -1,7 +1,9 @@
 CREATE TABLE dbPregnancy(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     motherName TEXT NOT NULL,
-    dueDate TEXT NOT NULL
+    dueDate TEXT NOT NULL,
+    isActive INTEGER NOT NULL,
+    lastViewed TEXT NOT NULL
 );
 
 selectAll:
@@ -11,7 +13,7 @@ selectById:
 SELECT * FROM dbPregnancy WHERE id = :id;
 
 insert:
-INSERT INTO dbPregnancy VALUES(?, ?, ?);
+INSERT INTO dbPregnancy VALUES(?, ?, ?, ?, ?);
 
 delete:
 DELETE FROM dbPregnancy WHERE id = :id;

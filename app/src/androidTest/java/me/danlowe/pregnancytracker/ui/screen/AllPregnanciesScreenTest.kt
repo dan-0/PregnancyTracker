@@ -4,7 +4,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import org.junit.Before
 import org.junit.Rule
 
-class HomeScreenTest {
+class AllPregnanciesScreenTest {
   @get:Rule
   val composeTestRule = createComposeRule()
 
