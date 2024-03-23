@@ -34,6 +34,7 @@ android {
 dependencies {
   implementation(project(":utils"))
   implementation(project(":database"))
+  implementation(project(":models"))
 
   testImplementation(project(":testutils"))
 

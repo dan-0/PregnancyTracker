@@ -19,7 +19,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.getScreenModel
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import kotlinx.collections.immutable.persistentListOf
+import me.danlowe.pregnancytracker.ui.screen.currentweek.CurrentWeekScreen
 import me.danlowe.pregnancytracker.ui.screen.home.views.AddPregnancyDialog
 import me.danlowe.pregnancytracker.ui.screen.home.views.PregnancyItem
 import me.danlowe.pregnancytracker.ui.screen.home.views.RemovePregnancyDialog
@@ -38,6 +41,8 @@ class HomeScreen : Screen {
     val showRemovePregnancyDialog by rememberSaveable(pregnancyForRemoval) {
       mutableStateOf(pregnancyForRemoval != null)
     }
+
+    val navigator = LocalNavigator.currentOrThrow
 
     Scaffold(
       floatingActionButton = {
@@ -78,7 +83,7 @@ class HomeScreen : Screen {
           PregnancyItem(
             pregnancy = pregnancy,
             removeClicked = { pregnancyForRemoval = pregnancy.id },
-            clicked = { /* TODO */ },
+            clicked = { navigator.push(CurrentWeekScreen(pregnancy.id)) },
           )
         }
       }

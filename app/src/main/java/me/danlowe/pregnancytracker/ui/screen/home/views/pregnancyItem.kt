@@ -57,7 +57,7 @@ fun PregnancyItem(
       verticalAlignment = Alignment.CenterVertically,
     ) {
       Image(
-        painter = painterResource(id = R.drawable.baby_in_womb),
+        painter = painterResource(id = R.drawable.ic_baby_in_womb),
         // not important
         contentDescription = null,
         modifier = Modifier

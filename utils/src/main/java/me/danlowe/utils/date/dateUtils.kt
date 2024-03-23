@@ -54,6 +54,8 @@ fun Long.fromUtcLongToLocalDateInstant(): Instant {
   }
 }
 
+const val PREGNANCY_LENGTH_DAYS = 280
+
 const val SHORT_DATE_FLAG = DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_ABBREV_MONTH or
   DateUtils.FORMAT_SHOW_YEAR
 

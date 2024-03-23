@@ -25,7 +25,7 @@
             <option value="$PROJECT_DIR$/build-logic" />
             <option value="$PROJECT_DIR$/build-logic/convention" />
             <option value="$PROJECT_DIR$/database" />
-            <option value="$PROJECT_DIR$/mylibrary" />
+            <option value="$PROJECT_DIR$/models" />
             <option value="$PROJECT_DIR$/testutils" />
             <option value="$PROJECT_DIR$/utils" />
           </set>

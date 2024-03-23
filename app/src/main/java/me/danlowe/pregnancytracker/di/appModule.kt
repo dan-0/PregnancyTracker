@@ -3,6 +3,7 @@ package me.danlowe.pregnancytracker.di
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import me.danlowe.pregnancytracker.PregnancyTracker
+import me.danlowe.pregnancytracker.ui.screen.currentweek.CurrentWeekScreenModel
 import me.danlowe.pregnancytracker.ui.screen.home.HomeScreenModel
 import me.danlowe.pregnancytracker.ui.screen.home.RealHomeScreenModel
 import me.danlowe.utils.coroutines.AppDispatchers
@@ -36,5 +37,11 @@ val MODULE_APP = module {
 val MODULE_HOME = module {
   factory {
     RealHomeScreenModel(get(), get(), get()) as HomeScreenModel
+  }
+}
+
+val MODULE_CURRENT_WEEK = module {
+  factory {
+    CurrentWeekScreenModel(get(), get(), get(), get())
   }
 }
