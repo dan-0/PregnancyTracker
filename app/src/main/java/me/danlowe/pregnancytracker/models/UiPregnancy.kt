@@ -9,7 +9,7 @@ data class UiPregnancy(
   val motherName: String,
 ) {
   companion object {
-    fun fromDbPregnancy(dbPregnancy: DbPregnancy, appDateFormatter: me.danlowe.utils.date.AppDateFormatter): UiPregnancy {
+    fun fromDbPregnancy(dbPregnancy: DbPregnancy, appDateFormatter: AppDateFormatter): UiPregnancy {
       return UiPregnancy(
         id = dbPregnancy.id,
         dueDate = appDateFormatter.toLocalizedShortDate(dbPregnancy.dueDate),

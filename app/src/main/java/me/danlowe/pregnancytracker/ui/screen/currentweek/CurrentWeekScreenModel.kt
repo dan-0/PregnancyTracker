@@ -11,7 +11,6 @@ import me.danlowe.pregnancytracker.DbPregnancy
 import me.danlowe.pregnancytracker.PregnancyQueries
 import me.danlowe.pregnancytracker.R
 import me.danlowe.utils.coroutines.AppDispatchers
-import me.danlowe.utils.date.AppDateFormatter
 import me.danlowe.utils.date.PREGNANCY_LENGTH_DAYS
 import me.danlowe.utils.date.from3339StringToInstant
 import java.time.Instant
@@ -19,9 +18,8 @@ import java.time.ZoneId
 import java.time.temporal.ChronoUnit
 
 class CurrentWeekScreenModel(
-  private val pregnancyQueries: PregnancyQueries,
-  private val dispatchers: AppDispatchers,
-  private val appDateFormatter: AppDateFormatter,
+  pregnancyQueries: PregnancyQueries,
+  dispatchers: AppDispatchers,
   currentPregnancyId: Long,
 ) : ScreenModel {
 
