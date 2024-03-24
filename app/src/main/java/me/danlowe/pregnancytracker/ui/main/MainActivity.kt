@@ -29,7 +29,7 @@ import cafe.adriel.voyager.navigator.tab.TabNavigator
 import cafe.adriel.voyager.transitions.SlideTransition
 import me.danlowe.pregnancytracker.ui.screen.allpregnancies.AllPregnanciesScreen
 import me.danlowe.pregnancytracker.ui.screen.currentweek.CurrentWeekTab
-import me.danlowe.pregnancytracker.ui.screen.logscreen.LogTab
+import me.danlowe.pregnancytracker.ui.screen.logscreen.tab.LogTab
 import me.danlowe.pregnancytracker.ui.theme.PregnancyTrackerTheme
 import me.danlowe.pregnancytracker.ui.views.FullScreenLoading
 import org.koin.androidx.compose.KoinAndroidContext

@@ -5,10 +5,13 @@ import androidx.datastore.preferences.core.Preferences
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToOne
 import cafe.adriel.voyager.core.model.ScreenModel
+import cafe.adriel.voyager.core.model.screenModelScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.takeWhile
 import me.danlowe.database.DbUtils
 import me.danlowe.database.prefs.PrefKey
@@ -53,6 +56,11 @@ class CurrentWeekScreenModel(
       currentWeekImage = R.drawable.ic_blueberry,
     )
   }.flowOn(dispatchers.io)
+    .shareIn(
+      scope = screenModelScope,
+      started = SharingStarted.Eagerly,
+      replay = 1,
+    )
 }
 
 data class PregnancyTime(

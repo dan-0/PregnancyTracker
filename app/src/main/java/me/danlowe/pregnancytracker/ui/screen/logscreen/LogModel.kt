@@ -8,8 +8,11 @@ import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.takeWhile
 import kotlinx.coroutines.launch
 import me.danlowe.database.DbUtils
@@ -54,7 +57,14 @@ class LogModel(
         )
     }
 
+
   val state = currentLogs
+    .flowOn(dispatchers.io)
+    .shareIn(
+      scope = screenModelScope,
+      started = SharingStarted.Eagerly,
+      replay = 1,
+    )
 
   fun handleEvent(event: LogEvent) {
     screenModelScope.launch(dispatchers.io) {
