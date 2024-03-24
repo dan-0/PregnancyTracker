@@ -8,18 +8,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.stringResource
-import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
-import kotlinx.collections.immutable.ImmutableList
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import me.danlowe.models.LogEntry
 import me.danlowe.pregnancytracker.R
 import me.danlowe.pregnancytracker.ui.views.FullScreenLoading
 
 object LogTab : Tab {
+  private fun readResolve(): Any = LogTab
   override val options: TabOptions
     @Composable
     get() {
@@ -48,17 +44,3 @@ object LogTab : Tab {
     }
   }
 }
-
-class LogModel : ScreenModel {
-  val _state = MutableStateFlow<LogState>(LogState.Loading)
-  val state: StateFlow<LogState> = _state
-}
-
-sealed class LogState {
-  object Loading : LogState()
-  data class Loaded(
-    val currentWeek: Int,
-    val recentEntries: ImmutableList<LogEntry>,
-  ) : LogState()
-}
-

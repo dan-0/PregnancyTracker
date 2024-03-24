@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.takeWhile
+import me.danlowe.database.DbUtils
 import me.danlowe.database.prefs.PrefKey
 import me.danlowe.models.TrimesterProgress
 import me.danlowe.pregnancytracker.DbPregnancy
@@ -29,11 +30,11 @@ class CurrentWeekScreenModel(
 ) : ScreenModel {
 
   private val currentPregnancyIdFlow = appPreferences.data.map { preferences ->
-    preferences[PrefKey.currentPregnancy] ?: ID_NO_VALUE
+    preferences[PrefKey.currentPregnancy] ?: DbUtils.ID_NO_VALUE
   }
 
   private val currentPregnancy: Flow<DbPregnancy> = currentPregnancyIdFlow
-    .takeWhile { it != ID_NO_VALUE }
+    .takeWhile { it != DbUtils.ID_NO_VALUE }
     .flatMapLatest { currentPregnancyId ->
       pregnancyQueries
         .selectById(currentPregnancyId)
@@ -42,24 +43,27 @@ class CurrentWeekScreenModel(
     }
 
   val state = currentPregnancy.map { pregnancy ->
-    val dueDateInstant = pregnancy.dueDate.from3339StringToInstant().atZone(ZoneId.systemDefault())
-    val conceptionDateInstant = dueDateInstant.minusDays(PREGNANCY_LENGTH_DAYS.toLong())
-    val currentTime = Instant.now().atZone(ZoneId.systemDefault())
-
-    val currentWeek = ChronoUnit.WEEKS.between(conceptionDateInstant, currentTime).toInt()
-    val daysLeft = ChronoUnit.DAYS.between(currentTime, dueDateInstant).toInt()
-    val daysIn = PREGNANCY_LENGTH_DAYS - daysLeft
+    val pregnancyTime = PregnancyTime(pregnancy.dueDate)
 
     CurrentWeekState.Loaded(
-      currentWeek = currentWeek,
-      trimesterProgress = TrimesterProgress(currentWeek),
-      daysLeft = daysLeft,
-      currentDayOf = daysIn,
+      currentWeek = pregnancyTime.currentWeek,
+      trimesterProgress = pregnancyTime.trimesterProgress,
+      daysLeft = pregnancyTime.daysLeft,
+      currentDayOf = pregnancyTime.daysIn,
       currentWeekImage = R.drawable.ic_blueberry,
     )
   }.flowOn(dispatchers.io)
+}
 
-  companion object {
-    private const val ID_NO_VALUE = -1L
-  }
+data class PregnancyTime(
+  val dueDate: String
+) {
+  private val dueDateInstant = dueDate.from3339StringToInstant().atZone(ZoneId.systemDefault())
+  private val conceptionDateInstant = dueDateInstant.minusDays(PREGNANCY_LENGTH_DAYS.toLong())
+  private val currentTime = Instant.now().atZone(ZoneId.systemDefault())
+
+  val currentWeek = ChronoUnit.WEEKS.between(conceptionDateInstant, currentTime).toInt()
+  val daysLeft = ChronoUnit.DAYS.between(currentTime, dueDateInstant).toInt()
+  val daysIn = PREGNANCY_LENGTH_DAYS - daysLeft
+  val trimesterProgress = TrimesterProgress(currentWeek)
 }

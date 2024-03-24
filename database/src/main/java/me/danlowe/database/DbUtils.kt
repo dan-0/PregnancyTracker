@@ -8,4 +8,8 @@ object DbUtils {
   fun booleanToLong(boolean: Boolean): Long {
     return if (boolean) 1L else 0L
   }
+
+  const val ID_NO_VALUE = -1L
+
+  const val ATTACHMENT_SEPARATOR = ":::"
 }

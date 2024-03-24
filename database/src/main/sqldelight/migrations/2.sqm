@@ -1,0 +1,8 @@
+CREATE TABLE dbLogs(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    pregnancyId INTEGER NOT NULL,
+    logDate TEXT NOT NULL,
+    logUpdatedDate TEXT,
+    attachmentUris TEXT,
+    entry TEXT NOT NULL
+);

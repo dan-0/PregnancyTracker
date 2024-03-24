@@ -1,0 +1,30 @@
+CREATE TABLE dbLogs(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    pregnancyId INTEGER NOT NULL,
+    logDate TEXT NOT NULL,
+    logUpdatedDate TEXT,
+    attachmentUris TEXT,
+    entry TEXT NOT NULL
+);
+
+selectByLogId:
+SELECT * FROM dbLogs WHERE id = :id;
+
+selectByPregnancyId:
+SELECT * FROM dbLogs WHERE pregnancyId = :pregnancyId;
+
+insert:
+INSERT INTO dbLogs VALUES(?, ?, ?, ?, ?, ?);
+
+update:
+UPDATE dbLogs
+SET logUpdatedDate = ?,
+    attachmentUris = ?,
+    entry = ?
+WHERE id = ?;
+
+delete:
+DELETE FROM dbLogs WHERE id = :id;
+
+deleteByPregnancyId:
+DELETE FROM dbLogs WHERE pregnancyId = :pregnancyId;
