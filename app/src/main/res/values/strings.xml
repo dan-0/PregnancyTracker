@@ -60,4 +60,7 @@
     <string name="current_week_date_days_left">%1$s | %2$s days in | %3$s days to go</string>
     <string name="home">Home</string>
     <string name="log">Log</string>
+    <string name="add_log">Add log</string>
+    <string name="add_log_entry">Add log entry</string>
+    <string name="submit">Submit</string>
 </resources>

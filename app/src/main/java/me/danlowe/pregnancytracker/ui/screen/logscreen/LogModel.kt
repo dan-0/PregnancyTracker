@@ -33,8 +33,10 @@ class LogModel(
   private val currentLogs = currentPregnancyIdFlow
     .takeWhile { it != DbUtils.ID_NO_VALUE }
     .flatMapLatest {
-      logQueriesFlow(it)
-    }.map { logs ->
+      logQueriesFlow(it).map { logs ->
+        logs to it
+      }
+    }.map { (logs, pregnancyId) ->
       val entries = logs.map {
         val attachmentUris = it.attachmentUris?.split(DbUtils.ATTACHMENT_SEPARATOR)
         LogEntry(
@@ -47,6 +49,7 @@ class LogModel(
         )
       }.toImmutableList()
         LogState.Loaded(
+          currentPregnancyId = pregnancyId,
           recentEntries = entries,
         )
     }

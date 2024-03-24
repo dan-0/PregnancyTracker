@@ -42,6 +42,26 @@ fun Instant.toLocalizedShortDate(): String {
   return DateUtils.formatDateTime(context, toEpochMilli(), SHORT_DATE_FLAG)
 }
 
+@Composable
+fun String.toLocalizedShortDate(): String {
+  val context = LocalContext.current
+  return DateUtils.formatDateTime(
+    context,
+    from3339StringToInstant().toEpochMilli(),
+    SHORT_DATE_FLAG,
+  )
+}
+
+@Composable
+fun String.toLocalizedShortDateTime(): String {
+  val context = LocalContext.current
+  return DateUtils.formatDateTime(
+    context,
+    from3339StringToInstant().toEpochMilli(),
+    DEFAULT_FLAGS,
+  )
+}
+
 fun Long.fromUtcLongToLocalDateInstant(): Instant {
   return Instant.ofEpochMilli(this).let {
     val currentOffset = ZonedDateTime.now(ZoneId.systemDefault()).offset

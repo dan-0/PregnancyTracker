@@ -169,7 +169,9 @@ fun PagerContent(
             }
           },
         ),
-        modifier = modifier.fillMaxWidth().testTag("motherNameTextField"),
+        modifier = modifier
+          .fillMaxWidth()
+          .testTag("motherNameTextField"),
       )
     }
 
@@ -179,19 +181,25 @@ fun PagerContent(
         headline = { Text(stringResource(R.string.due_date)) },
         title = null,
         showModeToggle = false,
-        modifier = modifier.fillMaxWidth().testTag("datePicker"),
+        modifier = modifier
+          .fillMaxWidth()
+          .testTag("datePicker"),
       )
     }
 
     2 -> {
       // confirm
       Column(
-        modifier = modifier.fillMaxWidth().testTag("confirmationScreen"),
+        modifier = modifier
+          .fillMaxWidth()
+          .testTag("confirmationScreen"),
       ) {
         Text(
           stringResource(R.string.confirm_your_information),
           style = MaterialTheme.typography.titleMedium,
-          modifier = Modifier.padding(bottom = 8.dp).testTag("confirmationTitle"),
+          modifier = Modifier
+            .padding(bottom = 8.dp)
+            .testTag("confirmationTitle"),
         )
         Text(
           stringResource(id = R.string.mother_s_name),
@@ -200,7 +208,9 @@ fun PagerContent(
         )
         Text(
           motherName.text,
-          modifier = Modifier.padding(start = 8.dp).testTag("motherNameValue"),
+          modifier = Modifier
+            .padding(start = 8.dp)
+            .testTag("motherNameValue"),
         )
         Text(
           stringResource(id = R.string.due_date),
@@ -212,7 +222,9 @@ fun PagerContent(
             ?.fromUtcLongToLocalDateInstant()
             ?.toLocalizedShortDate()
             .toString(),
-          modifier = Modifier.padding(start = 8.dp).testTag("dueDateValue"),
+          modifier = Modifier
+            .padding(start = 8.dp)
+            .testTag("dueDateValue"),
         )
       }
     }
