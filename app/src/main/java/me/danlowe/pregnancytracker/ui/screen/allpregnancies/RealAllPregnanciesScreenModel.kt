@@ -39,7 +39,7 @@ class RealAllPregnanciesScreenModel(
     .shareIn(
       scope = screenModelScope,
       started = SharingStarted.Eagerly,
-      replay = 1
+      replay = 1,
     )
 
   override fun addPregnancy(
@@ -72,4 +72,3 @@ class RealAllPregnanciesScreenModel(
     }
   }
 }
-

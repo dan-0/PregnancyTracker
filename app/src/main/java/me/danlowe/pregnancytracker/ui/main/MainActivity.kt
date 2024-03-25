@@ -49,13 +49,13 @@ class MainActivity : ComponentActivity() {
   private val mediaHandler: MediaHandler by inject()
 
   private val pickMediaLauncher = registerForActivityResult(
-    ActivityResultContracts.PickMultipleVisualMedia()
+    ActivityResultContracts.PickMultipleVisualMedia(),
   ) {
     mediaHandler.handleMedia(it)
   }
 
   private val takePictureLauncher = registerForActivityResult(
-    ActivityResultContracts.TakePicture()
+    ActivityResultContracts.TakePicture(),
   ) {
     mediaHandler.handleCamera(it)
   }
@@ -101,7 +101,6 @@ class MainActivity : ComponentActivity() {
                   Scaffold(
                     bottomBar = {
                       NavigationBar {
-
                       }
                       BottomAppBar(
                         actions = {

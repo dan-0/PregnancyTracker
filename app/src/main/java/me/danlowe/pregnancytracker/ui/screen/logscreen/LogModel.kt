@@ -51,12 +51,11 @@ class LogModel(
           entry = it.entry,
         )
       }.toImmutableList()
-        LogState.Loaded(
-          currentPregnancyId = pregnancyId,
-          recentEntries = entries,
-        )
+      LogState.Loaded(
+        currentPregnancyId = pregnancyId,
+        recentEntries = entries,
+      )
     }
-
 
   val state = currentLogs
     .flowOn(dispatchers.io)
@@ -90,7 +89,7 @@ class LogModel(
             it.joinToString(DbUtils.ATTACHMENT_SEPARATOR)
           }
         },
-        entry = addLogEntry.entry
+        entry = addLogEntry.entry,
       )
     }
   }
@@ -101,7 +100,7 @@ class LogModel(
         id = updateLogEntry.id,
         logUpdatedDate = appTime.currentUtcTimeAsString(),
         attachmentUris = updateLogEntry.attachmentUris.joinToString(DbUtils.ATTACHMENT_SEPARATOR),
-        entry = updateLogEntry.entry
+        entry = updateLogEntry.entry,
       )
     }
   }

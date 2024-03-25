@@ -19,7 +19,7 @@ class MediaHandler(
   private val cameraResults = MutableSharedFlow<Boolean>(0, 1)
 
   suspend fun requestMedia(
-    mediaRequestType: MediaRequestType
+    mediaRequestType: MediaRequestType,
   ): List<Uri> = withContext(dispatchers.io) {
     _requests.tryEmit(mediaRequestType)
     when (mediaRequestType) {

@@ -2,7 +2,6 @@ package me.danlowe.pregnancytracker.ui.screen.logscreen.add.view
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,10 +16,10 @@ fun AddLogButtonRow(
   onCancel: () -> Unit,
   submit: (String) -> Unit,
   currentEntry: TextFieldValue,
+  modifier: Modifier = Modifier,
 ) {
   Row(
-    modifier = Modifier
-        .fillMaxWidth(),
+    modifier = modifier,
     verticalAlignment = Alignment.Bottom,
     horizontalArrangement = Arrangement.SpaceBetween,
   ) {

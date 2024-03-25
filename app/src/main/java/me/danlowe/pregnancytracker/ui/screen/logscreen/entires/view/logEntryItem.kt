@@ -20,11 +20,10 @@ import me.danlowe.utils.date.toLocalizedShortDateTime
 @Composable
 fun LogEntryItem(
   entry: LogEntry,
+  modifier: Modifier = Modifier,
 ) {
   Card(
-    modifier = Modifier
-      .padding(horizontal = 16.dp)
-      .fillMaxWidth(),
+    modifier = modifier,
   ) {
     Column(
       modifier = Modifier

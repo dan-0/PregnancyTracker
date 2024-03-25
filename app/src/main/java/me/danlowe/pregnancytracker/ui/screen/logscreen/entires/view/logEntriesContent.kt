@@ -2,6 +2,7 @@ package me.danlowe.pregnancytracker.ui.screen.logscreen.entires.view
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -23,6 +24,7 @@ import me.danlowe.pregnancytracker.R
 @Composable
 fun LogEntriesContent(
   recentEntries: ImmutableList<LogEntry>,
+  modifier: Modifier = Modifier,
   navigateAddLog: () -> Unit,
 ) {
   Scaffold(
@@ -35,6 +37,7 @@ fun LogEntriesContent(
         )
       }
     },
+    modifier = modifier,
   ) { paddingValues ->
     LazyColumn(
       modifier = Modifier.padding(paddingValues),
@@ -47,7 +50,12 @@ fun LogEntriesContent(
         items = recentEntries,
         key = { "LOG_ITEM${it.id}" },
       ) { entry ->
-        LogEntryItem(entry)
+        LogEntryItem(
+          entry,
+          modifier = Modifier
+            .padding(horizontal = 16.dp)
+            .fillMaxWidth(),
+        )
       }
       item("bottomdivider") {
         Spacer(modifier = Modifier.height(16.dp))

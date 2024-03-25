@@ -53,5 +53,4 @@ class AddLogModel(
     }
     return contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
   }
-
 }

@@ -13,8 +13,12 @@ import me.danlowe.models.TrimesterProgress
 import me.danlowe.pregnancytracker.ui.screen.currentweek.TrimesterProgressBar
 
 @Composable
-fun TrimesterProgressView(trimesterProgress: TrimesterProgress) {
+fun TrimesterProgressView(
+  trimesterProgress: TrimesterProgress,
+  modifier: Modifier = Modifier,
+) {
   Column(
+    modifier = modifier,
     horizontalAlignment = Alignment.CenterHorizontally,
     verticalArrangement = Arrangement.spacedBy(8.dp),
   ) {

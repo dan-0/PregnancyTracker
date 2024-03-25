@@ -64,7 +64,7 @@ class CurrentWeekScreenModel(
 }
 
 data class PregnancyTime(
-  val dueDate: String
+  val dueDate: String,
 ) {
   private val dueDateInstant = dueDate.from3339StringToInstant().atZone(ZoneId.systemDefault())
   private val conceptionDateInstant = dueDateInstant.minusDays(PREGNANCY_LENGTH_DAYS.toLong())

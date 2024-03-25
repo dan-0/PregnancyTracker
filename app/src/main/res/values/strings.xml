@@ -73,4 +73,5 @@
     <string name="where_add_attachment_from">Where would you like to add an attachment from?</string>
     <string name="cd_add_attachment_from_camera">Add image attachment from camera</string>
     <string name="cd_add__attachment_from_local_media">Add attachment from local media</string>
+    <string name="current_week">Week %1$s</string>
 </resources>

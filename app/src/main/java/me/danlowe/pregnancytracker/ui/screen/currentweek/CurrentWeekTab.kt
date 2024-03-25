@@ -74,7 +74,8 @@ object CurrentWeekTab : Tab {
           currentWeekImage = loadedState.currentWeekImage,
           trimesterProgress = loadedState.trimesterProgress,
           daysIn = loadedState.currentDayOf,
-          whatToExpect = loadedState.whatToExpectStringRes
+          whatToExpect = loadedState.whatToExpectStringRes,
+          modifier = Modifier.padding(16.dp),
         )
       }
     }
@@ -87,13 +88,13 @@ fun CurrentWeekSummary(
   daysLeft: Int,
   daysIn: Int,
   trimesterProgress: TrimesterProgress,
-  currentDate: Instant = Instant.now(),
   @DrawableRes currentWeekImage: Int,
   @StringRes whatToExpect: Int,
+  modifier: Modifier = Modifier,
+  currentDate: Instant = Instant.now(),
 ) {
-
   Column(
-    modifier = Modifier.padding(16.dp),
+    modifier = modifier,
     verticalArrangement = Arrangement.spacedBy(16.dp),
   ) {
     Text(
@@ -149,17 +150,21 @@ fun CurrentWeekSummaryItem(
     modifier = modifier
       .background(MaterialTheme.colorScheme.background, CurrentWeekScreenDimens.itemShape)
       .border(1.dp, MaterialTheme.colorScheme.outline, CurrentWeekScreenDimens.itemShape)
-      .padding(CurrentWeekScreenDimens.basePadding)
+      .padding(CurrentWeekScreenDimens.basePadding),
   ) {
     content()
   }
 }
 
 @Composable
-fun ColumnScope.WeekTrimesterProgress(currentWeek: Int, trimesterProgress: TrimesterProgress) {
-  Text("Week $currentWeek")
+fun ColumnScope.WeekTrimesterProgress(
+  currentWeek: Int,
+  trimesterProgress: TrimesterProgress,
+  modifier: Modifier = Modifier,
+) {
+  Text(stringResource(R.string.current_week, currentWeek))
   Image(
-    modifier = Modifier.size(100.dp),
+    modifier = modifier.size(100.dp),
     painter = painterResource(id = R.drawable.ic_baby_in_hands),
     contentDescription = null,
   )
@@ -175,10 +180,13 @@ fun TrimesterProgressBar(currentProgress: Float, modifier: Modifier = Modifier) 
 }
 
 @Composable
-fun ColumnScope.CurrentSize(@DrawableRes image: Int) {
+fun ColumnScope.CurrentSize(
+  @DrawableRes image: Int,
+  modifier: Modifier = Modifier,
+) {
   Text(stringResource(R.string.baby_size))
   Box(
-    modifier = Modifier.weight(1f),
+    modifier = modifier.weight(1f),
     contentAlignment = Alignment.Center,
   ) {
     Image(
@@ -193,7 +201,7 @@ fun ColumnScope.CurrentSize(@DrawableRes image: Int) {
 fun WhatToExpect(
   currentWeek: Int,
   @StringRes whatToExpect: Int,
-  modifier: Modifier = Modifier
+  modifier: Modifier = Modifier,
 ) {
   Column(
     modifier = modifier

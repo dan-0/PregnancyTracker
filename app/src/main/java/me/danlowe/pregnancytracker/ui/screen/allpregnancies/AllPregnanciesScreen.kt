@@ -36,7 +36,10 @@ class AllPregnanciesScreen : Screen {
 }
 
 @Composable
-fun AllPregnanciesContent(screenModel: AllPregnanciesScreenModel) {
+fun AllPregnanciesContent(
+  screenModel: AllPregnanciesScreenModel,
+  modifier: Modifier = Modifier,
+) {
   var showAddDialog by rememberSaveable {
     mutableStateOf(false)
   }
@@ -51,6 +54,7 @@ fun AllPregnanciesContent(screenModel: AllPregnanciesScreenModel) {
         )
       }
     },
+    modifier = modifier,
   ) { paddingValues ->
 
     val pregnancies = screenModel.items.collectAsState(persistentListOf())
@@ -70,10 +74,10 @@ fun AllPregnanciesContent(screenModel: AllPregnanciesScreenModel) {
 fun AllPregnanciesView(
   pregnancies: ImmutableList<UiPregnancy>,
   showAddDialog: Boolean,
-  modifier: Modifier = Modifier,
   deletePregnancy: (Long) -> Unit,
   setSelection: (Long) -> Unit,
   addPregnancy: (String, Long) -> Unit,
+  modifier: Modifier = Modifier,
   closeAddDialog: () -> Unit,
 ) {
   var pregnancyForRemoval by rememberSaveable {

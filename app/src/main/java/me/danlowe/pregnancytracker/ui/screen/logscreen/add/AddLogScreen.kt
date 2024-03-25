@@ -31,4 +31,3 @@ class AddLogScreen(private val pregnancyId: Long) : Screen {
     }
   }
 }
-

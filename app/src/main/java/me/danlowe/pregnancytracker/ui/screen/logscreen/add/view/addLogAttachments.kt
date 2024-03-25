@@ -37,6 +37,7 @@ import me.danlowe.pregnancytracker.ui.screen.logscreen.add.data.AttachmentType
 @Composable
 fun AddLogAttachments(
   attachments: ImmutableList<String>,
+  modifier: Modifier = Modifier,
   addAttachments: (AttachmentType) -> Unit,
 ) {
   var showAttachmentSourceDialog by rememberSaveable {
@@ -47,13 +48,13 @@ fun AddLogAttachments(
     Dialog(onDismissRequest = { showAttachmentSourceDialog = false }) {
       AddLogDialogContent(
         closeDialog = { showAttachmentSourceDialog = false },
-        addAttachments = addAttachments
+        addAttachments = addAttachments,
       )
     }
   }
 
   Column(
-    modifier = Modifier.fillMaxWidth(),
+    modifier = modifier,
     verticalArrangement = Arrangement.spacedBy(16.dp),
   ) {
     Text(stringResource(R.string.attachments))
@@ -72,7 +73,7 @@ fun AddLogAttachments(
               R.string.cd_image_attachment,
               Uri.parse(it).lastPathSegment ?: "",
             ),
-            contentScale = ContentScale.Crop
+            contentScale = ContentScale.Crop,
           )
         }
       }
@@ -106,15 +107,15 @@ private fun AddLogDialogContent(
   ) {
     Text(
       text = stringResource(R.string.add_attachment),
-      style = MaterialTheme.typography.titleMedium
+      style = MaterialTheme.typography.titleMedium,
     )
     Text(
       text = stringResource(R.string.where_add_attachment_from),
-      style = MaterialTheme.typography.bodyMedium
+      style = MaterialTheme.typography.bodyMedium,
     )
     Row(
       modifier = Modifier.fillMaxWidth(),
-      horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterHorizontally)
+      horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterHorizontally),
     ) {
       // Add from camera
       AttachmentBox(
@@ -133,7 +134,7 @@ private fun AddLogDialogContent(
           )
           Text(
             text = stringResource(R.string.camera),
-            style = MaterialTheme.typography.labelSmall
+            style = MaterialTheme.typography.labelSmall,
           )
         }
       }
@@ -155,11 +156,10 @@ private fun AddLogDialogContent(
           )
           Text(
             text = stringResource(R.string.phone),
-            style = MaterialTheme.typography.labelSmall
+            style = MaterialTheme.typography.labelSmall,
           )
         }
       }
     }
   }
 }
-

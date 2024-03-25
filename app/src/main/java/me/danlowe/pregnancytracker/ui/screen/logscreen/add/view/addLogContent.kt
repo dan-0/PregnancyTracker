@@ -35,6 +35,7 @@ fun AddLogContent(
   attachments: ImmutableList<String>,
   onCancel: () -> Unit,
   addAttachments: (AttachmentType) -> Unit,
+  modifier: Modifier = Modifier,
   submit: (entry: String) -> Unit,
 ) {
   var currentEntry by rememberSaveable(stateSaver = TextFieldValue.Saver) {
@@ -51,6 +52,7 @@ fun AddLogContent(
         },
       )
     },
+    modifier = modifier,
   ) { paddingValues ->
     Column(
       modifier = Modifier
@@ -61,8 +63,7 @@ fun AddLogContent(
         .padding(horizontal = 16.dp),
       verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-
-      AddLogAttachments(attachments, addAttachments)
+      AddLogAttachments(attachments, Modifier.fillMaxWidth(), addAttachments)
 
       OutlinedTextField(
         value = currentEntry,
@@ -80,8 +81,7 @@ fun AddLogContent(
         ),
       )
 
-      AddLogButtonRow(onCancel, submit, currentEntry)
+      AddLogButtonRow(onCancel, submit, currentEntry, Modifier.fillMaxWidth())
     }
   }
 }
-

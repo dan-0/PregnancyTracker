@@ -1,7 +1,7 @@
 package me.danlowe.models
 
 data class TrimesterProgress(
-  val week: Int
+  val week: Int,
 ) {
   val firstTrimester: Float = when (week) {
     in 1..13 -> week.toFloat() / 13

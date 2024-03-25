@@ -17,12 +17,14 @@ fun AttachmentImagePager(
   contentScale: ContentScale = ContentScale.FillWidth,
 ) {
   val pagerState = rememberPagerState(pageCount = { imageUris.size })
-  HorizontalPager(state = pagerState) { page ->
+  HorizontalPager(
+    state = pagerState,
+    modifier = modifier,
+  ) { page ->
     AsyncImage(
       model = imageUris[page],
       contentDescription = null,
-      modifier = modifier,
-      contentScale = ContentScale.FillWidth,
+      contentScale = contentScale,
     )
   }
 }
