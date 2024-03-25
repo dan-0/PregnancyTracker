@@ -3,6 +3,8 @@ package me.danlowe.pregnancytracker.ui.main
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,17 +23,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.lifecycle.lifecycleScope
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.tab.CurrentTab
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabDisposable
 import cafe.adriel.voyager.navigator.tab.TabNavigator
 import cafe.adriel.voyager.transitions.SlideTransition
+import kotlinx.coroutines.launch
+import me.danlowe.pregnancytracker.mediapicker.MediaHandler
+import me.danlowe.pregnancytracker.mediapicker.MediaRequestType
 import me.danlowe.pregnancytracker.ui.screen.allpregnancies.AllPregnanciesScreen
 import me.danlowe.pregnancytracker.ui.screen.currentweek.CurrentWeekTab
 import me.danlowe.pregnancytracker.ui.screen.logscreen.tab.LogTab
 import me.danlowe.pregnancytracker.ui.theme.PregnancyTrackerTheme
 import me.danlowe.pregnancytracker.ui.views.FullScreenLoading
+import org.koin.android.ext.android.inject
 import org.koin.androidx.compose.KoinAndroidContext
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.annotation.KoinExperimentalAPI
@@ -39,10 +46,37 @@ import org.koin.core.annotation.KoinExperimentalAPI
 class MainActivity : ComponentActivity() {
 
   private val viewModel: MainViewModel by viewModel()
+  private val mediaHandler: MediaHandler by inject()
+
+  private val pickMediaLauncher = registerForActivityResult(
+    ActivityResultContracts.PickMultipleVisualMedia()
+  ) {
+    mediaHandler.handleMedia(it)
+  }
+
+  private val takePictureLauncher = registerForActivityResult(
+    ActivityResultContracts.TakePicture()
+  ) {
+    mediaHandler.handleCamera(it)
+  }
 
   @OptIn(KoinExperimentalAPI::class)
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+
+    lifecycleScope.launch {
+      mediaHandler.requests.collect { request ->
+        when (request) {
+          is MediaRequestType.Camera -> {
+            takePictureLauncher.launch(request.uri)
+          }
+          MediaRequestType.MediaPicker -> {
+            pickMediaLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+          }
+        }
+      }
+    }
+
     setContent {
       PregnancyTrackerTheme {
         KoinAndroidContext {

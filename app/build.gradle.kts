@@ -93,4 +93,7 @@ dependencies {
 
   // logging
   implementation(libs.kermit)
+
+  // extended icons
+  implementation(libs.androidx.material.icons.extended)
 }

@@ -7,11 +7,13 @@ import androidx.datastore.preferences.preferencesDataStore
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import me.danlowe.pregnancytracker.PregnancyTracker
+import me.danlowe.pregnancytracker.mediapicker.MediaHandler
 import me.danlowe.pregnancytracker.ui.main.MainViewModel
 import me.danlowe.pregnancytracker.ui.screen.allpregnancies.AllPregnanciesScreenModel
 import me.danlowe.pregnancytracker.ui.screen.allpregnancies.RealAllPregnanciesScreenModel
 import me.danlowe.pregnancytracker.ui.screen.currentweek.CurrentWeekScreenModel
 import me.danlowe.pregnancytracker.ui.screen.logscreen.LogModel
+import me.danlowe.pregnancytracker.ui.screen.logscreen.add.AddLogModel
 import me.danlowe.utils.coroutines.AppDispatchers
 import me.danlowe.utils.coroutines.RealAppDispatchers
 import me.danlowe.utils.date.AppDateFormatter
@@ -55,6 +57,8 @@ val MODULE_APP = module {
   singleOf<AppTime>(::RealAppTime)
 
   viewModelOf(::MainViewModel)
+
+  singleOf(::MediaHandler)
 }
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
@@ -69,4 +73,6 @@ val MODULE_CURRENT_WEEK = module {
 
 val MODULE_LOGGING = module {
   factoryOf(::LogModel)
+
+  factoryOf(::AddLogModel)
 }

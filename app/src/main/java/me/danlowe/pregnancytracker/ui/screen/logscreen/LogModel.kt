@@ -76,20 +76,26 @@ class LogModel(
     }
   }
 
-  fun addLogEntry(addLogEntry: LogEvent.AddLogEntry) {
+  private fun addLogEntry(addLogEntry: LogEvent.AddLogEntry) {
     screenModelScope.launch(dispatchers.io) {
       logsQueries.insert(
         id = null,
         pregnancyId = addLogEntry.pregnancyId,
         logDate = appTime.currentUtcTimeAsString(),
         logUpdatedDate = null,
-        attachmentUris = addLogEntry.attachmentUris.joinToString(DbUtils.ATTACHMENT_SEPARATOR),
+        attachmentUris = addLogEntry.attachmentUris.let {
+          if (it.isEmpty()) {
+            null
+          } else {
+            it.joinToString(DbUtils.ATTACHMENT_SEPARATOR)
+          }
+        },
         entry = addLogEntry.entry
       )
     }
   }
 
-  fun updateLogEntry(updateLogEntry: LogEvent.UpdateLogEntry) {
+  private fun updateLogEntry(updateLogEntry: LogEvent.UpdateLogEntry) {
     screenModelScope.launch(dispatchers.io) {
       logsQueries.update(
         id = updateLogEntry.id,
@@ -100,7 +106,7 @@ class LogModel(
     }
   }
 
-  fun deleteLogEntry(deleteLogEntry: LogEvent.DeleteLogEntry) {
+  private fun deleteLogEntry(deleteLogEntry: LogEvent.DeleteLogEntry) {
     screenModelScope.launch(dispatchers.io) {
       logsQueries.delete(deleteLogEntry.id)
     }

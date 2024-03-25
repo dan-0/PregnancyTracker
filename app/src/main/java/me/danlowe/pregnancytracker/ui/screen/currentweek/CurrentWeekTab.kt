@@ -16,7 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.twotone.Home
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -45,7 +45,7 @@ object CurrentWeekTab : Tab {
   override val options: TabOptions
     @Composable
     get() {
-      val icon = rememberVectorPainter(Icons.Default.Home)
+      val icon = rememberVectorPainter(Icons.TwoTone.Home)
       val title = stringResource(R.string.home)
       return remember {
         TabOptions(

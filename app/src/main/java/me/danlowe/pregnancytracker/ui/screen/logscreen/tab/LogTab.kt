@@ -1,7 +1,7 @@
 package me.danlowe.pregnancytracker.ui.screen.logscreen.tab
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.twotone.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.stringResource
@@ -17,7 +17,7 @@ object LogTab : Tab {
   override val options: TabOptions
     @Composable
     get() {
-      val icon = rememberVectorPainter(Icons.Default.Edit)
+      val icon = rememberVectorPainter(Icons.TwoTone.Edit)
       return TabOptions(
         index = 1u,
         title = stringResource(R.string.log),
