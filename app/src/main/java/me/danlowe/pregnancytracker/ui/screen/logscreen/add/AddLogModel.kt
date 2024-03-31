@@ -45,6 +45,14 @@ class AddLogModel(
     return AttachmentStatus.None
   }
 
+  fun deleteAttachment(uri: String) {
+    screenModelScope.launch(dispatchers.io) {
+      val current = _attachments.value.toMutableList()
+      current.remove(uri)
+      _attachments.value = current.toImmutableList()
+    }
+  }
+
   private fun createImageUri(): Uri? {
     val contentResolver = context.contentResolver
     val contentValues = ContentValues().apply {

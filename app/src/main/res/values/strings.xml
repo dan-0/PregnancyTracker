@@ -74,4 +74,7 @@
     <string name="cd_add_attachment_from_camera">Add image attachment from camera</string>
     <string name="cd_add__attachment_from_local_media">Add attachment from local media</string>
     <string name="current_week">Week %1$s</string>
+    <string name="cd_delete_attachment">Delete attachment</string>
+    <string name="delete_attachment">Delete attachment</string>
+    <string name="delete_this_attachment">Delete this attachment?</string>
 </resources>

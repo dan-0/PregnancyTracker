@@ -35,6 +35,7 @@ fun AddLogContent(
   attachments: ImmutableList<String>,
   onCancel: () -> Unit,
   addAttachments: (AttachmentType) -> Unit,
+  deleteAttachment: (String) -> Unit,
   modifier: Modifier = Modifier,
   submit: (entry: String) -> Unit,
 ) {
@@ -63,7 +64,7 @@ fun AddLogContent(
         .padding(horizontal = 16.dp),
       verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-      AddLogAttachments(attachments, Modifier.fillMaxWidth(), addAttachments)
+      AddLogAttachments(attachments, Modifier.fillMaxWidth(), addAttachments, deleteAttachment)
 
       OutlinedTextField(
         value = currentEntry,

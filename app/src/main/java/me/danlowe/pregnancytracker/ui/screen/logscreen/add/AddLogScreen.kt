@@ -25,6 +25,7 @@ class AddLogScreen(private val pregnancyId: Long) : Screen {
       attachments = attachments.value,
       onCancel = { navigator.pop() },
       addAttachments = addLogModel::requestAttachments,
+      deleteAttachment = addLogModel::deleteAttachment,
     ) { entry ->
       logModel.handleEvent(LogEvent.AddLogEntry(pregnancyId, entry, attachments.value))
       navigator.pop()

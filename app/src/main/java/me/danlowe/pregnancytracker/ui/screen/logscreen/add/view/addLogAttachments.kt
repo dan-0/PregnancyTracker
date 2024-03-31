@@ -5,16 +5,21 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.twotone.Delete
 import androidx.compose.material.icons.twotone.PhoneAndroid
 import androidx.compose.material.icons.twotone.PhotoCamera
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -39,6 +44,7 @@ fun AddLogAttachments(
   attachments: ImmutableList<String>,
   modifier: Modifier = Modifier,
   addAttachments: (AttachmentType) -> Unit,
+  deleteAttachment: (String) -> Unit,
 ) {
   var showAttachmentSourceDialog by rememberSaveable {
     mutableStateOf(false)
@@ -53,6 +59,18 @@ fun AddLogAttachments(
     }
   }
 
+  var uriForDeletion by rememberSaveable {
+    mutableStateOf<String?>(null)
+  }
+
+  if (uriForDeletion != null) {
+    Dialog(onDismissRequest = { uriForDeletion = null }) {
+      DeleteUriDialogContent(uriForDeletion!!, deleteAttachment) {
+        uriForDeletion = null
+      }
+    }
+  }
+
   Column(
     modifier = modifier,
     verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -61,20 +79,40 @@ fun AddLogAttachments(
     Row(
       modifier = Modifier
         .fillMaxWidth()
-        .height(AddLogDimens.attachmentSize)
+        .height(AddLogDimens.attachmentSize + 8.dp)
         .horizontalScroll(rememberScrollState()),
       horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
       attachments.forEach {
-        AttachmentBox {
-          AsyncImage(
-            model = it,
-            contentDescription = stringResource(
-              R.string.cd_image_attachment,
-              Uri.parse(it).lastPathSegment ?: "",
-            ),
-            contentScale = ContentScale.Crop,
-          )
+        Box {
+          AttachmentBox(
+            modifier = Modifier.align(Alignment.Center)
+          ) {
+            AsyncImage(
+              model = it,
+              contentDescription = stringResource(
+                R.string.cd_image_attachment,
+                Uri.parse(it).lastPathSegment ?: "",
+              ),
+              contentScale = ContentScale.Crop,
+            )
+          }
+          Box(
+            modifier = Modifier
+              .padding(top = 2.dp, end = 2.dp)
+              .align(Alignment.TopEnd)
+              .background(MaterialTheme.colorScheme.background, CircleShape)
+              .clickable {
+                uriForDeletion = it
+              },
+            contentAlignment = Alignment.Center,
+          ) {
+            Icon(
+              Icons.TwoTone.Delete,
+              contentDescription = stringResource(R.string.cd_delete_attachment),
+              tint = MaterialTheme.colorScheme.error,
+            )
+          }
         }
       }
 
@@ -86,6 +124,51 @@ fun AddLogAttachments(
           Icons.Default.Add,
           contentDescription = stringResource(R.string.cd_add_image_attachment),
         )
+      }
+    }
+  }
+}
+
+@Composable
+private fun DeleteUriDialogContent(
+  uriForDeletion: String,
+  deleteAttachment: (String) -> Unit,
+  closeDialog: () -> Unit,
+) {
+  Column(
+    modifier = Modifier
+      .background(
+        MaterialTheme.colorScheme.background,
+        MaterialTheme.shapes.medium,
+      )
+      .padding(16.dp),
+    verticalArrangement = Arrangement.spacedBy(16.dp),
+  ) {
+    Text(
+      text = stringResource(R.string.delete_attachment),
+      style = MaterialTheme.typography.titleMedium,
+    )
+    Text(
+      text = stringResource(R.string.delete_this_attachment),
+      style = MaterialTheme.typography.bodyMedium,
+    )
+    Row(
+      modifier = Modifier.fillMaxWidth(),
+      horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.End),
+    ) {
+      Button(onClick = { closeDialog() }) {
+        Text(stringResource(R.string.cancel))
+      }
+      Button(
+        onClick = {
+          deleteAttachment(uriForDeletion)
+          closeDialog()
+        },
+        colors = ButtonDefaults.buttonColors().copy(
+          containerColor = MaterialTheme.colorScheme.error,
+        ),
+      ) {
+        Text(stringResource(R.string.delete_attachment))
       }
     }
   }
