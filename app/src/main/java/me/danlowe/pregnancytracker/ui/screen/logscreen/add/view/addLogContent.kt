@@ -57,7 +57,7 @@ fun AddLogContent(
             contentDescription = stringResource(id = R.string.back),
             modifier = Modifier.clickable {
               goBack()
-            }
+            },
           )
         },
         title = {
@@ -67,10 +67,10 @@ fun AddLogContent(
         },
       )
     },
-    modifier = Modifier,
+    modifier = modifier,
   ) { paddingValues ->
     Column(
-      modifier = modifier
+      modifier = Modifier
         .fillMaxSize()
         .verticalScroll(rememberScrollState())
         .background(MaterialTheme.colorScheme.background, MaterialTheme.shapes.medium)
@@ -78,7 +78,7 @@ fun AddLogContent(
         .padding(horizontal = 16.dp),
       verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-      AddLogAttachments(attachments, Modifier.fillMaxWidth(), addAttachments, deleteAttachment)
+      AddLogAttachments(attachments, addAttachments, Modifier.fillMaxWidth(), deleteAttachment)
 
       OutlinedTextField(
         value = currentEntry,

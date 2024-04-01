@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -34,29 +35,30 @@ fun EditLogLoadedContent(
   attachments: ImmutableList<String>,
   canSave: Boolean,
   onBack: () -> Unit,
-  modifier: Modifier = Modifier,
   updateLogEntry: (String) -> Unit,
   deleteAttachment: (String) -> Unit,
   requestAddAttachment: (AttachmentType) -> Unit,
+  modifier: Modifier = Modifier,
   save: () -> Unit,
 ) {
   var currentEntryText by rememberSaveable(stateSaver = TextFieldValue.Saver) {
     mutableStateOf(TextFieldValue(entry))
   }
 
+  val lastUpdateLogEntry by rememberUpdatedState(updateLogEntry)
+
   LaunchedEffect(key1 = currentEntryText) {
     delay(200)
-    updateLogEntry(currentEntryText.text)
+    lastUpdateLogEntry(currentEntryText.text)
   }
 
   Column(
     modifier = modifier
-        .verticalScroll(rememberScrollState())
-        .background(MaterialTheme.colorScheme.background, MaterialTheme.shapes.medium)
-        .padding(horizontal = 16.dp),
+      .verticalScroll(rememberScrollState())
+      .background(MaterialTheme.colorScheme.background, MaterialTheme.shapes.medium)
+      .padding(horizontal = 16.dp),
     verticalArrangement = Arrangement.spacedBy(16.dp),
   ) {
-
     AddLogAttachments(
       attachments = attachments,
       modifier = Modifier.fillMaxWidth(),
@@ -70,7 +72,7 @@ fun EditLogLoadedContent(
         currentEntryText = it
       },
       modifier = Modifier
-          .fillMaxWidth(),
+        .fillMaxWidth(),
       minLines = 5,
       maxLines = 10,
       label = { Text(stringResource(R.string.log_entry)) },
@@ -84,7 +86,7 @@ fun EditLogLoadedContent(
       canSave = canSave,
       onCancel = onBack,
       save = save,
-      modifier = Modifier.fillMaxWidth()
+      modifier = Modifier.fillMaxWidth(),
     )
   }
 }

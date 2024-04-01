@@ -42,8 +42,8 @@ import me.danlowe.pregnancytracker.ui.screen.logscreen.add.data.AttachmentType
 @Composable
 fun AddLogAttachments(
   attachments: ImmutableList<String>,
-  modifier: Modifier = Modifier,
   addAttachments: (AttachmentType) -> Unit,
+  modifier: Modifier = Modifier,
   deleteAttachment: (String) -> Unit,
 ) {
   var showAttachmentSourceDialog by rememberSaveable {
@@ -86,7 +86,7 @@ fun AddLogAttachments(
       attachments.forEach {
         Box {
           AttachmentBox(
-            modifier = Modifier.align(Alignment.Center)
+            modifier = Modifier.align(Alignment.Center),
           ) {
             AsyncImage(
               model = it,

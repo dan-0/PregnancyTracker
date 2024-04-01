@@ -4,7 +4,7 @@ import me.danlowe.pregnancytracker.ui.screen.logscreen.add.data.AttachmentType
 
 interface AttachmentHandler {
   suspend fun requestAttachments(
-    type: AttachmentType
+    type: AttachmentType,
   ): RequestResult
 
   sealed class RequestResult {

@@ -27,6 +27,7 @@ import me.danlowe.pregnancytracker.ui.views.FullScreenLoading
 @OptIn(ExperimentalMaterial3Api::class)
 fun EditLogContent(
   state: EditLogState,
+  modifier: Modifier = Modifier,
   dispatch: (EditLogEvent) -> Unit,
 ) {
   Scaffold(
@@ -48,7 +49,7 @@ fun EditLogContent(
         },
       )
     },
-    modifier = Modifier,
+    modifier = modifier,
   ) { paddingValues ->
     when (val currentState = state) {
       is EditLogState.Loading -> {

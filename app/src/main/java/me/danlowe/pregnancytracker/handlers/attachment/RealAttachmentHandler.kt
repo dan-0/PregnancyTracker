@@ -16,7 +16,7 @@ class RealAttachmentHandler(
   private val mediaHandler: MediaHandler,
 ) : AttachmentHandler {
   override suspend fun requestAttachments(
-    type: AttachmentType
+    type: AttachmentType,
   ): AttachmentHandler.RequestResult = withContext(dispatchers.io) {
     val request = when (type) {
       AttachmentType.Camera -> {
@@ -27,7 +27,6 @@ class RealAttachmentHandler(
       }
 
       AttachmentType.MediaPicker -> MediaRequestType.MediaPicker
-
     }
     val uris = mediaHandler.requestMedia(request).map { it.toString() }
     return@withContext AttachmentHandler.RequestResult.Attachments(uris)

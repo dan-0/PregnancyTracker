@@ -32,7 +32,7 @@ class LogEntriesScreen : Screen {
           recentEntries = currentState.recentEntries,
           onEdit = { entryId ->
             navigator.push(EditLogScreen(entryId))
-          }
+          },
         ) {
           navigator.push(AddLogScreen(currentState.currentPregnancyId))
         }
