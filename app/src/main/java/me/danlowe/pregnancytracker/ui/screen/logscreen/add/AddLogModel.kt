@@ -1,48 +1,44 @@
 package me.danlowe.pregnancytracker.ui.screen.logscreen.add
 
-import android.content.ContentValues
-import android.content.Context
-import android.net.Uri
-import android.provider.MediaStore
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import me.danlowe.pregnancytracker.mediapicker.MediaHandler
-import me.danlowe.pregnancytracker.mediapicker.MediaRequestType
-import me.danlowe.pregnancytracker.ui.screen.logscreen.add.data.AttachmentStatus
+import me.danlowe.pregnancytracker.handlers.attachment.AttachmentHandler
+import me.danlowe.pregnancytracker.repo.log.LogRepo
 import me.danlowe.pregnancytracker.ui.screen.logscreen.add.data.AttachmentType
 import me.danlowe.utils.coroutines.AppDispatchers
 
 class AddLogModel(
   private val dispatchers: AppDispatchers,
-  private val mediaHandler: MediaHandler,
-  private val context: Context,
+  private val logRepo: LogRepo,
+  private val attachmentHandler: AttachmentHandler,
 ) : ScreenModel {
 
   private val _attachments = MutableStateFlow<ImmutableList<String>>(persistentListOf())
   val attachments: StateFlow<ImmutableList<String>> = _attachments
 
-  fun requestAttachments(type: AttachmentType): AttachmentStatus {
-    val request = when (type) {
-      AttachmentType.Camera -> {
-        val uri = createImageUri() ?: return AttachmentStatus.CameraImageError
-        MediaRequestType.Camera(uri)
-      }
-      AttachmentType.MediaPicker -> MediaRequestType.MediaPicker
-    }
-    screenModelScope.launch(dispatchers.io) {
-      val uris = mediaHandler.requestMedia(request)
-      val current = _attachments.value
-      val newUris = uris.map { it.toString() }
-      _attachments.value = (current + newUris).distinct().toImmutableList()
-    }
+  private val _attachmentError = MutableSharedFlow<Unit>()
+  val attachmentError: SharedFlow<Unit?> = _attachmentError
 
-    return AttachmentStatus.None
+  fun requestAttachments(type: AttachmentType) {
+    screenModelScope.launch {
+      when (val result = attachmentHandler.requestAttachments(type)) {
+        is AttachmentHandler.RequestResult.Attachments -> {
+          val current = _attachments.value
+          _attachments.value = (current + result.uris).distinct().toImmutableList()
+        }
+        AttachmentHandler.RequestResult.CameraAttachmentError -> {
+          _attachmentError.emit(Unit)
+        }
+      }
+    }
   }
 
   fun deleteAttachment(uri: String) {
@@ -53,12 +49,13 @@ class AddLogModel(
     }
   }
 
-  private fun createImageUri(): Uri? {
-    val contentResolver = context.contentResolver
-    val contentValues = ContentValues().apply {
-      put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
-      put(MediaStore.MediaColumns.DISPLAY_NAME, "image${System.currentTimeMillis()}.jpeg")
+  fun addLogEntry(
+    pregnancyId: Long,
+    entry: String,
+  ) {
+    screenModelScope.launch(dispatchers.io) {
+      logRepo.addLogEntry(pregnancyId, entry, attachments.value)
     }
-    return contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
   }
 }
+

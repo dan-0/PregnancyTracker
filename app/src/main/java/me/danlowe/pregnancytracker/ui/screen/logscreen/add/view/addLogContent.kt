@@ -1,6 +1,7 @@
 package me.danlowe.pregnancytracker.ui.screen.logscreen.add.view
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,7 +10,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -34,6 +38,7 @@ import me.danlowe.pregnancytracker.ui.screen.logscreen.add.data.AttachmentType
 fun AddLogContent(
   attachments: ImmutableList<String>,
   onCancel: () -> Unit,
+  goBack: () -> Unit,
   addAttachments: (AttachmentType) -> Unit,
   deleteAttachment: (String) -> Unit,
   modifier: Modifier = Modifier,
@@ -46,6 +51,15 @@ fun AddLogContent(
   Scaffold(
     topBar = {
       TopAppBar(
+        navigationIcon = {
+          Icon(
+            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+            contentDescription = stringResource(id = R.string.back),
+            modifier = Modifier.clickable {
+              goBack()
+            }
+          )
+        },
         title = {
           Text(
             text = stringResource(R.string.add_log_entry),
@@ -53,10 +67,10 @@ fun AddLogContent(
         },
       )
     },
-    modifier = modifier,
+    modifier = Modifier,
   ) { paddingValues ->
     Column(
-      modifier = Modifier
+      modifier = modifier
         .fillMaxSize()
         .verticalScroll(rememberScrollState())
         .background(MaterialTheme.colorScheme.background, MaterialTheme.shapes.medium)

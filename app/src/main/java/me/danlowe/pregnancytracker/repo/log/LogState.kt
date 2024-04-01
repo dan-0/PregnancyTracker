@@ -1,4 +1,4 @@
-package me.danlowe.pregnancytracker.ui.screen.logscreen
+package me.danlowe.pregnancytracker.repo.log
 
 import kotlinx.collections.immutable.ImmutableList
 import me.danlowe.models.LogEntry

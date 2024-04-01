@@ -7,9 +7,9 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.getNavigatorScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import me.danlowe.pregnancytracker.ui.screen.logscreen.LogModel
-import me.danlowe.pregnancytracker.ui.screen.logscreen.LogState
+import me.danlowe.pregnancytracker.repo.log.LogState
 import me.danlowe.pregnancytracker.ui.screen.logscreen.add.AddLogScreen
+import me.danlowe.pregnancytracker.ui.screen.logscreen.edit.EditLogScreen
 import me.danlowe.pregnancytracker.ui.screen.logscreen.entires.view.LogEntriesContent
 import me.danlowe.pregnancytracker.ui.views.FullScreenLoading
 
@@ -18,7 +18,7 @@ class LogEntriesScreen : Screen {
   override fun Content() {
     val navigator = LocalNavigator.currentOrThrow
 
-    val screenModel = navigator.getNavigatorScreenModel<LogModel>()
+    val screenModel = navigator.getNavigatorScreenModel<LogEntriesModel>()
 
     val state by screenModel.state.collectAsState(LogState.Loading)
 
@@ -28,7 +28,12 @@ class LogEntriesScreen : Screen {
       }
 
       is LogState.Loaded -> {
-        LogEntriesContent(currentState.recentEntries) {
+        LogEntriesContent(
+          recentEntries = currentState.recentEntries,
+          onEdit = { entryId ->
+            navigator.push(EditLogScreen(entryId))
+          }
+        ) {
           navigator.push(AddLogScreen(currentState.currentPregnancyId))
         }
       }

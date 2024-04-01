@@ -14,11 +14,12 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun AttachmentBox(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
   Box(
-    modifier = modifier
+    modifier = Modifier
       .size(AddLogDimens.attachmentSize)
       .background(MaterialTheme.colorScheme.background, MaterialTheme.shapes.medium)
       .border(1.dp, MaterialTheme.colorScheme.outline, MaterialTheme.shapes.medium)
-      .clip(MaterialTheme.shapes.medium),
+      .clip(MaterialTheme.shapes.medium)
+      .then(modifier),
     contentAlignment = Alignment.Center,
   ) {
     content()

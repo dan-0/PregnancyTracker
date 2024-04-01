@@ -1,4 +1,4 @@
-package me.danlowe.pregnancytracker.mediapicker
+package me.danlowe.pregnancytracker.handlers.mediapicker
 
 import android.net.Uri
 import kotlinx.coroutines.flow.MutableSharedFlow

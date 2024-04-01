@@ -7,13 +7,18 @@ import androidx.datastore.preferences.preferencesDataStore
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import me.danlowe.pregnancytracker.PregnancyTracker
-import me.danlowe.pregnancytracker.mediapicker.MediaHandler
+import me.danlowe.pregnancytracker.handlers.attachment.AttachmentHandler
+import me.danlowe.pregnancytracker.handlers.attachment.RealAttachmentHandler
+import me.danlowe.pregnancytracker.handlers.mediapicker.MediaHandler
+import me.danlowe.pregnancytracker.repo.log.LogRepo
+import me.danlowe.pregnancytracker.repo.log.RealLogRepo
 import me.danlowe.pregnancytracker.ui.main.MainViewModel
 import me.danlowe.pregnancytracker.ui.screen.allpregnancies.AllPregnanciesScreenModel
 import me.danlowe.pregnancytracker.ui.screen.allpregnancies.RealAllPregnanciesScreenModel
 import me.danlowe.pregnancytracker.ui.screen.currentweek.CurrentWeekScreenModel
-import me.danlowe.pregnancytracker.ui.screen.logscreen.LogModel
 import me.danlowe.pregnancytracker.ui.screen.logscreen.add.AddLogModel
+import me.danlowe.pregnancytracker.ui.screen.logscreen.edit.EditLogScreenModel
+import me.danlowe.pregnancytracker.ui.screen.logscreen.entires.LogEntriesModel
 import me.danlowe.utils.coroutines.AppDispatchers
 import me.danlowe.utils.coroutines.RealAppDispatchers
 import me.danlowe.utils.date.AppDateFormatter
@@ -50,6 +55,8 @@ val MODULE_APP = module {
     androidContext().dataStore
   }
 
+  singleOf(::RealLogRepo).bind(LogRepo::class)
+
   singleOf<AppDispatchers>(::RealAppDispatchers)
 
   singleOf(::RealAppDateFormatter).bind(AppDateFormatter::class)
@@ -59,6 +66,8 @@ val MODULE_APP = module {
   viewModelOf(::MainViewModel)
 
   singleOf(::MediaHandler)
+
+  singleOf(::RealAttachmentHandler).bind(AttachmentHandler::class)
 }
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
@@ -72,7 +81,9 @@ val MODULE_CURRENT_WEEK = module {
 }
 
 val MODULE_LOGGING = module {
-  factoryOf(::LogModel)
+  factoryOf(::LogEntriesModel)
 
   factoryOf(::AddLogModel)
+
+  factoryOf(::EditLogScreenModel)
 }

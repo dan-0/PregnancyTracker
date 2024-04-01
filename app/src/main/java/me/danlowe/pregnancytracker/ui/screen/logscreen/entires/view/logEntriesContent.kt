@@ -1,5 +1,6 @@
 package me.danlowe.pregnancytracker.ui.screen.logscreen.entires.view
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -24,6 +25,7 @@ import me.danlowe.pregnancytracker.R
 @Composable
 fun LogEntriesContent(
   recentEntries: ImmutableList<LogEntry>,
+  onEdit: (Long) -> Unit,
   modifier: Modifier = Modifier,
   navigateAddLog: () -> Unit,
 ) {
@@ -54,7 +56,10 @@ fun LogEntriesContent(
           entry,
           modifier = Modifier
             .padding(horizontal = 16.dp)
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .clickable {
+              onEdit(entry.id)
+            },
         )
       }
       item("bottomdivider") {

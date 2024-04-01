@@ -77,4 +77,7 @@
     <string name="cd_delete_attachment">Delete attachment</string>
     <string name="delete_attachment">Delete attachment</string>
     <string name="delete_this_attachment">Delete this attachment?</string>
+    <string name="update">Update</string>
+    <string name="error_loading_log_entry">Error loading log entry</string>
+    <string name="error_accessing_camera">Error accessing camera</string>
 </resources>

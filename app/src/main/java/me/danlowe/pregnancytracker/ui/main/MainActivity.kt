@@ -31,8 +31,8 @@ import cafe.adriel.voyager.navigator.tab.TabDisposable
 import cafe.adriel.voyager.navigator.tab.TabNavigator
 import cafe.adriel.voyager.transitions.SlideTransition
 import kotlinx.coroutines.launch
-import me.danlowe.pregnancytracker.mediapicker.MediaHandler
-import me.danlowe.pregnancytracker.mediapicker.MediaRequestType
+import me.danlowe.pregnancytracker.handlers.mediapicker.MediaHandler
+import me.danlowe.pregnancytracker.handlers.mediapicker.MediaRequestType
 import me.danlowe.pregnancytracker.ui.screen.allpregnancies.AllPregnanciesScreen
 import me.danlowe.pregnancytracker.ui.screen.currentweek.CurrentWeekTab
 import me.danlowe.pregnancytracker.ui.screen.logscreen.tab.LogTab
