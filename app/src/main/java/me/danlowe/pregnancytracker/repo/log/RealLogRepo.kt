@@ -88,10 +88,15 @@ class RealLogRepo(
     attachmentUris: List<String>,
     entryText: String,
   ) = withContext(dispatchers.io) {
+    val attachments = if (attachmentUris.filterNot { it.isBlank() }.isEmpty()) {
+      null
+    } else {
+      attachmentUris.joinToString(DbUtils.ATTACHMENT_SEPARATOR)
+    }
     logsQueries.update(
       id = entryId,
       logUpdatedDate = appTime.currentUtcTimeAsString(),
-      attachmentUris = attachmentUris.joinToString(DbUtils.ATTACHMENT_SEPARATOR),
+      attachmentUris = attachments,
       entry = entryText,
     )
   }

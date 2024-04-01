@@ -43,7 +43,7 @@ fun EditLogContent(
         },
         title = {
           Text(
-            text = stringResource(R.string.add_log_entry),
+            text = stringResource(R.string.edit_log_entry),
           )
         },
       )
@@ -58,8 +58,8 @@ fun EditLogContent(
       EditLogState.Error -> {
         Column(
           modifier = Modifier
-              .fillMaxSize()
-              .padding(paddingValues),
+            .fillMaxSize()
+            .padding(paddingValues),
           verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
           horizontalAlignment = Alignment.CenterHorizontally,
         ) {
@@ -73,8 +73,8 @@ fun EditLogContent(
       is EditLogState.Loaded -> {
         EditLogLoadedContent(
           modifier = Modifier
-              .fillMaxSize()
-              .padding(paddingValues),
+            .fillMaxSize()
+            .padding(paddingValues),
           entry = currentState.workingEntry.entry,
           attachments = currentState.workingEntry.attachmentUris,
           canSave = currentState.canSave,

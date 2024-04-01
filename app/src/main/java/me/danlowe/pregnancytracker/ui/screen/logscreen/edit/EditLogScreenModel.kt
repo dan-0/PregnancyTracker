@@ -96,8 +96,6 @@ class EditLogScreenModel(
         entryText = currentState.workingEntry.entry,
       )
     }
-
   }
-
 }
 

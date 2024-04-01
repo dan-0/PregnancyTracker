@@ -80,4 +80,7 @@
     <string name="update">Update</string>
     <string name="error_loading_log_entry">Error loading log entry</string>
     <string name="error_accessing_camera">Error accessing camera</string>
+    <string name="log_last_updated">Last updated: %1$s</string>
+    <string name="log_date">Date: %1$s</string>
+    <string name="edit_log_entry">Edit Log Entry</string>
 </resources>

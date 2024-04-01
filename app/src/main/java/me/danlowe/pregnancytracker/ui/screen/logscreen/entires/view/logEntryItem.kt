@@ -11,9 +11,12 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import me.danlowe.models.LogEntry
+import me.danlowe.pregnancytracker.R
 import me.danlowe.pregnancytracker.ui.views.AttachmentImagePager
 import me.danlowe.utils.date.toLocalizedShortDateTime
 
@@ -50,9 +53,23 @@ fun LogEntryItem(
           horizontalArrangement = Arrangement.End,
         ) {
           Text(
-            text = entry.date.toLocalizedShortDateTime(),
+            text = stringResource(R.string.log_date, entry.date.toLocalizedShortDateTime()),
             style = MaterialTheme.typography.labelSmall,
           )
+        }
+        if (entry.updatedDate != null) {
+          Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.End),
+          ) {
+            Text(
+              text = stringResource(
+                R.string.log_last_updated,
+                entry.updatedDate!!.toLocalizedShortDateTime(),
+              ),
+              style = MaterialTheme.typography.labelSmall,
+            )
+          }
         }
       }
     }
