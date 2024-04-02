@@ -96,4 +96,7 @@ dependencies {
 
   // extended icons
   implementation(libs.androidx.material.icons.extended)
+
+  // Leak canary
+  debugImplementation(libs.leakcanary.android)
 }

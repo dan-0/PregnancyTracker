@@ -30,7 +30,9 @@ import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import cafe.adriel.voyager.koin.getScreenModel
+import cafe.adriel.voyager.koin.getNavigatorScreenModel
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
 import me.danlowe.models.TrimesterProgress
@@ -58,7 +60,9 @@ object CurrentWeekTab : Tab {
 
   @Composable
   override fun Content() {
-    val screenModel = getScreenModel<CurrentWeekScreenModel>()
+    val screenModel = LocalNavigator.currentOrThrow
+      .getNavigatorScreenModel<CurrentWeekScreenModel>()
+
     val state by screenModel.state.collectAsState(CurrentWeekState.Loading)
 
     when (state) {
