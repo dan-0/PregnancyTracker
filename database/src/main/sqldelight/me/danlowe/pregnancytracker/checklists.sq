@@ -1,0 +1,20 @@
+import kotlin.Int;
+import kotlin.collections.List;
+
+CREATE TABLE dbCheckList (
+    id INTEGER PRIMARY KEY,
+    checklistName TEXT NOT NULL,
+    checkItems TEXT AS List<Int> NOT NULL
+);
+
+selectAll:
+SELECT * FROM dbCheckList;
+
+getChecklistCount:
+SELECT COUNT(*) FROM dbCheckList;
+
+updateCheckItems:
+UPDATE dbCheckList SET checkItems = :checkItems WHERE id = :id;
+
+insertCheckList:
+INSERT INTO dbCheckList (id, checklistName, checkItems) VALUES (:id, :checklistName, :checkItems);

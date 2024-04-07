@@ -6,6 +6,8 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
+import me.danlowe.database.ListOfIntDbAdapter
+import me.danlowe.pregnancytracker.DbCheckList
 import me.danlowe.pregnancytracker.PregnancyTracker
 import me.danlowe.pregnancytracker.handlers.attachment.AttachmentHandler
 import me.danlowe.pregnancytracker.handlers.attachment.RealAttachmentHandler
@@ -38,7 +40,12 @@ val MODULE_APP = module {
   }
 
   single {
-    PregnancyTracker(get())
+    PregnancyTracker(
+      get(),
+      dbCheckListAdapter = DbCheckList.Adapter(
+        checkItemsAdapter = ListOfIntDbAdapter
+      )
+    )
   }
 
   single {

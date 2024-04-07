@@ -1,0 +1,14 @@
+CREATE TABLE dbCheckItem (
+    id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL,
+    isChecked INTEGER NOT NULL
+);
+
+selectAll:
+SELECT * FROM dbCheckItem;
+
+setCheck:
+UPDATE dbCheckItem SET isChecked = ? WHERE id = ?;
+
+insert:
+INSERT INTO dbCheckItem (id, name, isChecked) VALUES (?, ?, ?);
