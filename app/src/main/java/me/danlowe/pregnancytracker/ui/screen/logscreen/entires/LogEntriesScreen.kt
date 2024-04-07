@@ -20,7 +20,7 @@ class LogEntriesScreen : Screen {
 
     val screenModel = navigator.getNavigatorScreenModel<LogEntriesModel>()
 
-    val state by screenModel.state.collectAsState(LogState.Loading)
+    val state by screenModel.state.collectAsState()
 
     when (val currentState = state) {
       LogState.Loading -> {

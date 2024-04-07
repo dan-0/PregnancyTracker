@@ -17,6 +17,7 @@ import me.danlowe.pregnancytracker.repo.log.RealLogRepo
 import me.danlowe.pregnancytracker.ui.main.MainViewModel
 import me.danlowe.pregnancytracker.ui.screen.allpregnancies.AllPregnanciesScreenModel
 import me.danlowe.pregnancytracker.ui.screen.allpregnancies.RealAllPregnanciesScreenModel
+import me.danlowe.pregnancytracker.ui.screen.checklist.tab.ChecklistModel
 import me.danlowe.pregnancytracker.ui.screen.currentweek.CurrentWeekScreenModel
 import me.danlowe.pregnancytracker.ui.screen.logscreen.add.AddLogModel
 import me.danlowe.pregnancytracker.ui.screen.logscreen.edit.EditLogScreenModel
@@ -43,8 +44,8 @@ val MODULE_APP = module {
     PregnancyTracker(
       get(),
       dbCheckListAdapter = DbCheckList.Adapter(
-        checkItemsAdapter = ListOfIntDbAdapter
-      )
+        checkItemsAdapter = ListOfIntDbAdapter,
+      ),
     )
   }
 
@@ -56,6 +57,16 @@ val MODULE_APP = module {
   single {
     val database: PregnancyTracker = get()
     database.logsQueries
+  }
+
+  single {
+    val database: PregnancyTracker = get()
+    database.checklistsQueries
+  }
+
+  single {
+    val database: PregnancyTracker = get()
+    database.checkitemsQueries
   }
 
   single {
@@ -93,4 +104,8 @@ val MODULE_LOGGING = module {
   factoryOf(::AddLogModel)
 
   factoryOf(::EditLogScreenModel)
+}
+
+val MODULE_CHECKLIST = module {
+  factoryOf(::ChecklistModel)
 }

@@ -34,6 +34,7 @@ import kotlinx.coroutines.launch
 import me.danlowe.pregnancytracker.handlers.mediapicker.MediaHandler
 import me.danlowe.pregnancytracker.handlers.mediapicker.MediaRequestType
 import me.danlowe.pregnancytracker.ui.screen.allpregnancies.AllPregnanciesScreen
+import me.danlowe.pregnancytracker.ui.screen.checklist.tab.ChecklistTab
 import me.danlowe.pregnancytracker.ui.screen.currentweek.CurrentWeekTab
 import me.danlowe.pregnancytracker.ui.screen.logscreen.tab.LogTab
 import me.danlowe.pregnancytracker.ui.theme.PregnancyTrackerTheme
@@ -109,6 +110,12 @@ class MainActivity : ComponentActivity() {
                             selected = tabNavigator.current == CurrentWeekTab,
                           ) {
                             tabNavigator.current = CurrentWeekTab
+                          }
+                          TabNavigationItem(
+                            tab = ChecklistTab,
+                            selected = tabNavigator.current == ChecklistTab,
+                          ) {
+                            tabNavigator.current = ChecklistTab
                           }
                           TabNavigationItem(
                             tab = LogTab,

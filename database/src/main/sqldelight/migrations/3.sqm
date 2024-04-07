@@ -1,0 +1,14 @@
+import kotlin.Int;
+import kotlin.collections.List;
+
+CREATE TABLE dbCheckItem (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    isChecked INTEGER NOT NULL
+);
+
+CREATE TABLE dbCheckList (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    checklistName TEXT NOT NULL,
+    checkItems TEXT AS List<Int> NOT NULL
+);

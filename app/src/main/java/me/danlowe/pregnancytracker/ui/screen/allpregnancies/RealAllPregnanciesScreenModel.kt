@@ -6,11 +6,12 @@ import androidx.datastore.preferences.core.edit
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import cafe.adriel.voyager.core.model.screenModelScope
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.shareIn
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import me.danlowe.database.DbUtils
 import me.danlowe.database.prefs.PrefKey
@@ -36,10 +37,10 @@ class RealAllPregnanciesScreenModel(
         UiPregnancy.fromDbPregnancy(pregnancy, appDateFormatter)
       }.toImmutableList()
     }.flowOn(dispatchers.io)
-    .shareIn(
+    .stateIn(
       scope = screenModelScope,
       started = SharingStarted.Eagerly,
-      replay = 1,
+      initialValue = persistentListOf(),
     )
 
   override fun addPregnancy(

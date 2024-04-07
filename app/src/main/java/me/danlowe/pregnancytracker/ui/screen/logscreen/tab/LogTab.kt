@@ -19,7 +19,7 @@ object LogTab : Tab {
     get() {
       val icon = rememberVectorPainter(Icons.TwoTone.Edit)
       return TabOptions(
-        index = 1u,
+        index = 2u,
         title = stringResource(R.string.log),
         icon = icon,
       )

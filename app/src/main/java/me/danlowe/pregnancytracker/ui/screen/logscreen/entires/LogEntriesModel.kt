@@ -4,8 +4,9 @@ import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.shareIn
+import kotlinx.coroutines.flow.stateIn
 import me.danlowe.pregnancytracker.repo.log.LogRepo
+import me.danlowe.pregnancytracker.repo.log.LogState
 import me.danlowe.utils.coroutines.AppDispatchers
 
 class LogEntriesModel(
@@ -15,9 +16,9 @@ class LogEntriesModel(
 
   val state = logRepo.currentLogs
     .flowOn(dispatchers.io)
-    .shareIn(
+    .stateIn(
       scope = screenModelScope,
       started = SharingStarted.Eagerly,
-      replay = 1,
+      initialValue = LogState.Loading,
     )
 }

@@ -1,14 +1,17 @@
 import kotlin.Int;
 import kotlin.collections.List;
 
-CREATE TABLE dbCheckList (
-    id INTEGER PRIMARY KEY,
+CREATE TABLE dbCheckList(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     checklistName TEXT NOT NULL,
     checkItems TEXT AS List<Int> NOT NULL
 );
 
 selectAll:
 SELECT * FROM dbCheckList;
+
+selectById:
+SELECT * FROM dbCheckList WHERE id = :id;
 
 getChecklistCount:
 SELECT COUNT(*) FROM dbCheckList;
